@@ -39,7 +39,12 @@
 
 .dot_a_venir {
   background: transparent;
-  border: 1.5px solid #2E4055;
+  border: 1.5px solid #94A3B8;
+}
+
+.dot_a_venir_completed {
+  background: #C9A96E;
+  border: none;
 }
 
 .line {
@@ -66,6 +71,18 @@
   gap: 8px;
 }
 
+.titre {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  background: transparent;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+}
+
 .ville {
   font-size: 14px;
   font-weight: 500;
@@ -75,6 +92,10 @@
 .termine .ville { color: #4A5F74; }
 .en_cours .ville { color: var(--text); }
 .a_venir .ville { color: #8A9DB8; }
+
+.termine .titre { color: #4A5F74; }
+.en_cours .titre { color: var(--text); }
+.a_venir .titre { color: #8A9DB8; }
 
 .badge {
   font-size: 10px;
@@ -97,6 +118,26 @@
 .badge_a_venir {
   background: var(--card);
   color: var(--text4);
+}
+
+.btn_complete {
+  font-size: 10px;
+  font-weight: 500;
+  border-radius: 11px;
+  padding: 2px 8px;
+  flex-shrink: 0;
+  border: 1px solid #94A3B8;
+  background: transparent;
+  color: var(--text3);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.btn_complete.done {
+  background: rgba(201, 169, 110, 0.12);
+  border-color: var(--gold-border);
+  color: var(--gold);
 }
 
 .dates {

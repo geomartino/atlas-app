@@ -14,29 +14,42 @@ const BADGE_LABELS: Record<string, string> = {
 }
 
 export default function Timeline({ onSelectStep }: { onSelectStep: (idx: number) => void }) {
-  const { etapes } = useVoyage()
+  const { etapes, completedIds, toggleCompleted } = useVoyage()
 
   return (
     <div className={styles.timeline}>
       {etapes.map((etape, idx) => {
         const statut = getStatut(etape)
         const isLast = idx === etapes.length - 1
+        const manuellementComplete = statut === 'a_venir' && completedIds.has(etape.id)
+
+        const dotClass = manuellementComplete
+          ? `${styles.dot} ${styles.dot_a_venir_completed}`
+          : `${styles.dot} ${styles[`dot_${statut}`]}`
+
         return (
-          <button
-            key={etape.id}
-            className={`${styles.item} ${styles[statut]}`}
-            onClick={() => onSelectStep(idx)}
-          >
+          <div key={etape.id} className={`${styles.item} ${styles[statut]}`}>
             <div className={styles.lineCol}>
-              <div className={`${styles.dot} ${styles[`dot_${statut}`]}`} />
+              <div className={dotClass} />
               {!isLast && <div className={styles.line} />}
             </div>
             <div className={styles.body}>
               <div className={styles.row}>
-                <span className={styles.ville}>{etape.titre}</span>
-                <span className={`${styles.badge} ${styles[`badge_${statut}`]}`}>
-                  {BADGE_LABELS[statut]}
-                </span>
+                <button className={styles.titre} onClick={() => onSelectStep(idx)}>
+                  {etape.titre}
+                </button>
+                {statut === 'a_venir' ? (
+                  <button
+                    className={`${styles.btn_complete} ${manuellementComplete ? styles.done : ''}`}
+                    onClick={() => toggleCompleted(etape.id)}
+                  >
+                    {manuellementComplete ? '✓ Complété' : 'Complété'}
+                  </button>
+                ) : (
+                  <span className={`${styles.badge} ${styles[`badge_${statut}`]}`}>
+                    {BADGE_LABELS[statut]}
+                  </span>
+                )}
               </div>
               <span className={styles.dates}>
                 {formatDate(etape.date_arrivee)}
@@ -49,7 +62,7 @@ export default function Timeline({ onSelectStep }: { onSelectStep: (idx: number)
                 </span>
               )}
             </div>
-          </button>
+          </div>
         )
       })}
     </div>

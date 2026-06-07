@@ -3,12 +3,29 @@ import type { Voyage, Etape, VoyageData } from '../types'
 import { seedDB, getAllEtapes } from '../lib/db'
 import { getEtapeEnCours } from '../lib/statut'
 
+const LS_KEY = 'atlas-completed-steps'
+
+function loadCompleted(): Set<string> {
+  try {
+    const raw = localStorage.getItem(LS_KEY)
+    return raw ? new Set(JSON.parse(raw) as string[]) : new Set()
+  } catch {
+    return new Set()
+  }
+}
+
+function saveCompleted(ids: Set<string>) {
+  localStorage.setItem(LS_KEY, JSON.stringify([...ids]))
+}
+
 interface VoyageContextValue {
   voyage: Voyage | null
   etapes: Etape[]
   selectedIndex: number
   selectStep: (index: number) => void
   loading: boolean
+  completedIds: Set<string>
+  toggleCompleted: (id: string) => void
 }
 
 const VoyageContext = createContext<VoyageContextValue | null>(null)
@@ -18,6 +35,17 @@ export function VoyageProvider({ children }: { children: ReactNode }) {
   const [etapes, setEtapes] = useState<Etape[]>([])
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [loading, setLoading] = useState(true)
+  const [completedIds, setCompletedIds] = useState<Set<string>>(loadCompleted)
+
+  function toggleCompleted(id: string) {
+    setCompletedIds(prev => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      saveCompleted(next)
+      return next
+    })
+  }
 
   useEffect(() => {
     async function load() {
@@ -48,7 +76,7 @@ export function VoyageProvider({ children }: { children: ReactNode }) {
   }, [])
 
   return (
-    <VoyageContext.Provider value={{ voyage, etapes, selectedIndex, selectStep: setSelectedIndex, loading }}>
+    <VoyageContext.Provider value={{ voyage, etapes, selectedIndex, selectStep: setSelectedIndex, loading, completedIds, toggleCompleted }}>
       {children}
     </VoyageContext.Provider>
   )
