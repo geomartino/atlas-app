@@ -1,0 +1,71 @@
+.carousel {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  min-width: 100px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  padding: 10px 12px;
+  background: var(--card);
+  border: 0.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s;
+}
+
+.num {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.ville {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90px;
+}
+
+.date {
+  font-size: 10px;
+  margin-top: 2px;
+}
+
+/* Statut : à venir */
+.a_venir .num { color: var(--text4); }
+.a_venir .ville { color: var(--text4); }
+.a_venir .date { color: var(--text5); }
+
+/* Statut : terminé */
+.termine .num { color: var(--text4); }
+.termine .ville { color: var(--text4); }
+.termine .date { color: var(--text5); }
+
+/* Statut : en cours */
+.en_cours .num { color: var(--gold); }
+.en_cours .ville { color: var(--text); }
+.en_cours .date { color: var(--text3); }
+
+/* Card active (sélectionnée) */
+.active {
+  border-color: var(--gold-border);
+}
+.active .num { color: var(--gold); }
+.active .ville { color: var(--text); }
+.active .date { color: var(--text3); }

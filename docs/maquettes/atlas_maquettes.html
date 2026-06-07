@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Atlas — Maquettes UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --gold:#C9A96E;--gold-dim:rgba(201,169,110,0.15);--gold-border:rgba(201,169,110,0.3);
+  --bg:#080C12;--surface:#0D1117;--card:#111820;--card2:#1A2535;
+  --border:#1E2A3A;--border2:#2A3545;
+  --text:#E8E2D5;--text2:#A8B8CC;--text3:#6A7A90;--text4:#3E5068;--text5:#2E3D50;
+  --blue:#378ADD;--green:#1D9E75;
+}
+html,body{min-height:100vh;background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);}
+
+/* ── PAGE LAYOUT ── */
+.page-header{text-align:center;padding:56px 24px 40px;}
+.page-logo{font-family:'Syne',sans-serif;font-size:42px;font-weight:800;color:var(--text);letter-spacing:-1px;}
+.page-logo span{color:var(--gold);}
+.page-sub{font-size:15px;color:var(--text3);margin-top:8px;letter-spacing:0.3px;}
+.phase-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold-dim);border:0.5px solid var(--gold-border);border-radius:20px;padding:6px 16px;font-size:12px;color:var(--gold);margin-top:16px;}
+
+/* ── SCREEN SWITCHER ── */
+.switcher{display:flex;justify-content:center;gap:8px;margin-bottom:48px;padding:0 24px;}
+.sw-btn{padding:10px 22px;border-radius:20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;border:0.5px solid var(--border2);background:transparent;color:var(--text3);cursor:pointer;transition:all .2s;letter-spacing:0.2px;}
+.sw-btn:hover{border-color:var(--gold-border);color:var(--text2);}
+.sw-btn.active{background:var(--gold);color:var(--surface);border-color:var(--gold);font-weight:500;}
+
+/* ── SCREENS CONTAINER ── */
+.screens-stage{position:relative;display:flex;justify-content:center;align-items:flex-start;gap:32px;padding:0 24px 80px;flex-wrap:nowrap;}
+.screen-slot{position:relative;flex-shrink:0;}
+.screen-label{text-align:center;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text4);margin-bottom:12px;}
+
+/* ── PHONE FRAME ── */
+.phone{background:var(--surface);border-radius:28px;overflow:hidden;border:0.5px solid #2A2F3A;width:320px;}
+
+/* ── OVERLAY PANEL ── */
+.screen-slot .overlay-panel{
+  position:absolute;top:0;left:0;width:100%;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease, transform .3s ease;
+  transform:translateY(8px);
+  z-index:10;
+}
+.screen-slot .overlay-panel.visible{
+  opacity:1;pointer-events:all;
+  transform:translateY(0);
+}
+.screen-slot .base-phone{transition:opacity .3s ease;}
+.screen-slot.dimmed .base-phone{opacity:0.25;}
+
+/* ── MAP ── */
+.map-zone{position:relative;height:260px;background:#131C28;overflow:hidden;}
+.map-zone svg{width:100%;height:100%;}
+.sbar{padding:11px 16px 0;display:flex;justify-content:space-between;}
+.sbar span{font-size:11px;color:rgba(255,255,255,0.6);font-weight:500;}
+.trip-pill{position:absolute;top:32px;left:16px;right:16px;background:rgba(13,17,23,0.85);border:0.5px solid #2E3845;border-radius:18px;padding:8px 13px;display:flex;align-items:center;gap:9px;}
+.tp-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);flex:1;}
+.tp-meta{font-size:11px;color:var(--text3);}
+.day-badge{background:var(--gold);color:var(--surface);border-radius:11px;padding:3px 9px;font-size:11px;font-weight:500;}
+
+/* ── BOTTOM SHEET ── */
+.sheet{background:var(--surface);border-radius:22px 22px 0 0;margin-top:-20px;position:relative;z-index:2;}
+.handle{width:34px;height:4px;background:#2A3040;border-radius:2px;margin:9px auto 5px;}
+.hint-txt{display:flex;align-items:center;justify-content:center;gap:5px;padding:0 16px 9px;font-size:11px;color:var(--text5);}
+.cur{padding:0 16px 11px;display:flex;gap:11px;align-items:center;}
+.stop-icon{width:42px;height:42px;border-radius:13px;background:#1E293B;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.stop-tag{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:500;}
+.stop-city{font-family:'Syne',sans-serif;font-size:19px;font-weight:800;color:var(--text);line-height:1.1;}
+.stop-sub{font-size:11px;color:var(--text3);margin-top:1px;}
+.wx{background:var(--card2);border:0.5px solid var(--border2);border-radius:11px;padding:5px 9px;display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text2);flex-shrink:0;}
+.wx strong{color:var(--text);}
+.divider{height:0.5px;background:#1A2230;margin:0 16px 11px;}
+.row-label{padding:0 16px 7px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text4);}
+
+/* ── CAROUSEL ── */
+.cards-row{display:flex;gap:8px;padding:0 16px 12px;overflow-x:auto;scrollbar-width:none;}
+.cards-row::-webkit-scrollbar{display:none;}
+.nc{background:var(--card);border:0.5px solid var(--border);border-radius:13px;padding:10px;min-width:96px;flex-shrink:0;cursor:pointer;transition:border-color .2s;}
+.nc:hover{border-color:var(--border2);}
+.nc.ac{border-color:var(--gold);}
+.nn{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;line-height:1;margin-bottom:4px;color:var(--border);}
+.nn.ac{color:var(--gold);} .nn.dn{color:#253545;}
+.ncity{font-size:12px;font-weight:500;color:var(--text4);}
+.ncity.ac{color:var(--text);} .ncity.dn{color:#4A5F74;}
+.ndur{font-size:10px;color:#2A3545;margin-top:1px;}
+.ndur.ac{color:var(--text3);} .ndur.dn{color:#3A4F60;}
+.cdot{width:5px;height:5px;border-radius:50%;background:#1A2535;margin-top:7px;}
+.cdot.ac{background:var(--gold);} .cdot.dn{background:var(--text4);}
+
+/* ── TABS ── */
+.tab-bar{display:flex;border-top:0.5px solid #1A2230;}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 13px;cursor:pointer;border:none;background:transparent;border-top:1.5px solid transparent;transition:all .15s;}
+.tab:hover .ti2{color:var(--text2);}
+.tab:hover .tl{color:var(--text2);}
+.tab.active{border-top-color:var(--gold);}
+.ti2{font-size:20px;color:var(--text4);}
+.ti2.active{color:var(--gold);}
+.tl{font-size:10px;color:var(--text4);}
+.tl.active{color:var(--gold);}
+
+/* ── VOYAGE SCREEN ── */
+.voy-header{padding:18px 16px 6px;}
+.voy-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text);}
+.voy-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.voy-list{padding:6px 16px 0;}
+.vstop{display:flex;align-items:stretch;gap:13px;padding:8px 0;cursor:pointer;}
+.vstop:hover .vcity{color:var(--text)!important;}
+.vdot-col{display:flex;flex-direction:column;align-items:center;width:16px;flex-shrink:0;padding-top:3px;}
+.vdot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.vdot.dn{background:#2E4055;} .vdot.ac{background:var(--gold);box-shadow:0 0 0 3px rgba(201,169,110,0.18);} .vdot.up{background:transparent;border:1.5px solid #2E4055;}
+.vline{width:1.5px;flex:1;background:#1A2535;margin-top:4px;min-height:22px;}
+.vinfo{flex:1;padding-bottom:9px;}
+.vcity{font-size:14px;font-weight:500;color:var(--text);transition:color .15s;}
+.vcity.dn{color:#4A5F74;} .vcity.up{color:#8A9DB8;}
+.vdates{font-size:11px;color:var(--text4);margin-top:1px;}
+.vstatus{font-size:10px;border-radius:10px;padding:3px 10px;font-weight:500;white-space:nowrap;align-self:flex-start;margin-top:1px;}
+.vstatus.dn{background:#151F2C;color:#4A5F74;}
+.vstatus.ac{background:rgba(201,169,110,0.12);color:var(--gold);border:0.5px solid var(--gold-border);}
+.vstatus.up{background:var(--card);color:var(--text4);border:0.5px solid var(--border);}
+.tap-hint{display:flex;align-items:center;gap:6px;margin:6px 16px 12px;padding:8px 12px;background:var(--card);border:0.5px solid var(--border);border-radius:11px;font-size:11px;color:var(--text4);}
+
+/* ── DÉTAIL SCREEN ── */
+.dheader{padding:13px 16px 11px;display:flex;align-items:flex-start;gap:11px;}
+.dback{width:34px;height:34px;border-radius:11px;background:var(--card);border:0.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--text2);font-size:17px;cursor:pointer;}
+.dtitle-block{flex:1;}
+.detape{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:500;}
+.dcity{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text);line-height:1.1;}
+.dsub{font-size:11px;color:var(--text3);margin-top:2px;}
+.dmeta{display:flex;gap:7px;padding:0 16px 13px;flex-wrap:wrap;}
+.chip{background:var(--card);border:0.5px solid var(--border);border-radius:11px;padding:5px 10px;display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);}
+.chip strong{color:var(--text);}
+.sec-label{padding:0 16px 7px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text4);}
+.section{margin:0 16px 7px;border:0.5px solid var(--border);border-radius:13px;overflow:hidden;background:var(--card);}
+.sec-header{display:flex;align-items:center;gap:9px;padding:11px 13px;cursor:pointer;}
+.sec-ico{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sec-ico.bed{background:rgba(201,169,110,0.1);border:0.5px solid rgba(201,169,110,0.2);}
+.sec-ico.fork{background:rgba(55,138,221,0.1);border:0.5px solid rgba(55,138,221,0.2);}
+.sec-ico.act{background:rgba(29,158,117,0.1);border:0.5px solid rgba(29,158,117,0.2);}
+.sec-name{flex:1;font-size:13px;font-weight:500;color:#C8D8E8;}
+.sec-count{font-size:10px;color:var(--text4);margin-right:3px;}
+.sec-chev{font-size:14px;color:var(--text4);}
+.notes-block{padding:0 16px 13px;}
+.notes-area{width:100%;background:var(--card);border:0.5px solid var(--border);border-radius:11px;padding:9px 11px;font-size:12px;color:var(--text3);font-family:'DM Sans',sans-serif;resize:none;min-height:56px;line-height:1.5;}
+.disc-btn{margin:0 16px 13px;width:calc(100% - 32px);padding:11px;border-radius:13px;background:var(--card2);border:0.5px solid var(--border2);color:#C8D8E8;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;}
+
+/* ── WORKFLOW NOTES ── */
+.workflow-section{max-width:960px;margin:0 auto;padding:0 24px 80px;}
+.wf-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text);margin-bottom:24px;padding-top:16px;}
+.wf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.wf-card{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:18px;}
+.wf-card-title{font-size:13px;font-weight:500;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.wf-card-title i{font-size:16px;}
+.wf-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:12px;color:var(--text3);line-height:1.4;}
+.wf-item i{font-size:13px;color:var(--text4);margin-top:1px;flex-shrink:0;}
+.wf-item strong{color:var(--text2);}
+.todo-section{max-width:960px;margin:0 auto;padding:0 24px 80px;}
+.todo-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text);margin-bottom:20px;}
+.todo-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.todo-item{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:13px 14px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text3);}
+.todo-item i{font-size:16px;color:var(--text4);flex-shrink:0;}
+
+@media(max-width:760px){
+  .screens-stage{flex-direction:column;align-items:center;}
+  .wf-grid,.todo-list{grid-template-columns:1fr;}
+  .phone{width:290px;}
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-logo">Atlas<span>.</span></div>
+  <div class="page-sub">Application mobile de voyage · Documentation des maquettes UI</div>
+  <div class="phase-badge"><i class="ti ti-code"></i> Phase 1 — Écrans 1 &amp; 2 à coder</div>
+</div>
+
+<!-- SWITCHER -->
+<div class="switcher">
+  <button class="sw-btn active" onclick="showAll()">Tous les écrans</button>
+  <button class="sw-btn" onclick="showScreen('s1')">Écran 1 — Carte</button>
+  <button class="sw-btn" onclick="showScreen('s2')">Écran 2 — Voyage</button>
+  <button class="sw-btn" onclick="showScreen('s3')">Écran 3 — Détail</button>
+</div>
+
+<!-- SCREENS -->
+<div class="screens-stage" id="stage">
+
+  <!-- ÉCRAN 1 — CARTE -->
+  <div class="screen-slot" id="s1">
+    <div class="screen-label">Écran 1 — Carte</div>
+    <div class="phone base-phone">
+      <div class="map-zone">
+        <svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg">
+          <rect width="320" height="260" fill="#131C28"/>
+          <line x1="0" y1="65" x2="320" y2="65" stroke="#172030" stroke-width="0.5"/>
+          <line x1="0" y1="130" x2="320" y2="130" stroke="#172030" stroke-width="0.5"/>
+          <line x1="0" y1="195" x2="320" y2="195" stroke="#172030" stroke-width="0.5"/>
+          <line x1="80" y1="0" x2="80" y2="260" stroke="#172030" stroke-width="0.5"/>
+          <line x1="160" y1="0" x2="160" y2="260" stroke="#172030" stroke-width="0.5"/>
+          <line x1="240" y1="0" x2="240" y2="260" stroke="#172030" stroke-width="0.5"/>
+          <path d="M10 185 Q40 165 62 170 Q88 176 108 156 Q128 138 148 145 Q166 151 182 136 Q200 119 220 127 Q238 134 256 118 Q274 101 296 109 L320 100 L320 260 L0 260 Z" fill="#0A1520" stroke="#1A2E45" stroke-width="0.5"/>
+          <path d="M42 170 Q85 152 128 146 Q158 141 182 134 Q208 124 234 128 Q260 132 286 116" fill="none" stroke="#C9A96E" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.55"/>
+          <circle cx="42" cy="170" r="5" fill="#253545"/><circle cx="42" cy="170" r="2.5" fill="#4A6070"/>
+          <circle cx="128" cy="146" r="5" fill="#253545"/><circle cx="128" cy="146" r="2.5" fill="#4A6070"/>
+          <circle cx="182" cy="134" r="12" fill="rgba(201,169,110,0.14)" stroke="#C9A96E" stroke-width="1.5"/>
+          <circle cx="182" cy="134" r="5" fill="#C9A96E"/>
+          <circle cx="234" cy="128" r="5" fill="transparent" stroke="#2E4055" stroke-width="1.5" stroke-dasharray="2 2"/>
+          <circle cx="286" cy="116" r="5" fill="transparent" stroke="#2E4055" stroke-width="1.5" stroke-dasharray="2 2"/>
+          <rect x="192" y="118" width="66" height="16" rx="8" fill="rgba(13,17,23,0.9)" stroke="#2E3845" stroke-width="0.5"/>
+          <text x="225" y="130" font-family="DM Sans,sans-serif" font-size="10" fill="#C9A96E" text-anchor="middle" font-weight="500">Akureyri</text>
+        </svg>
+        <div style="position:absolute;top:0;left:0;right:0;padding:11px 16px 0;display:flex;justify-content:space-between;">
+          <span style="font-size:11px;color:rgba(255,255,255,0.6);">9:41</span>
+          <span style="font-size:11px;color:rgba(255,255,255,0.6);">●●●</span>
+        </div>
+        <div class="trip-pill">
+          <i class="ti ti-route" style="font-size:14px;color:#C9A96E;"></i>
+          <span class="tp-title">Tour d'Islande</span>
+          <span class="tp-meta">21 jours</span>
+          <span class="day-badge">J+9</span>
+        </div>
+      </div>
+      <div class="sheet">
+        <div class="handle"></div>
+        <div class="hint-txt"><i class="ti ti-chevron-down" style="font-size:12px;"></i><span>Glisser pour voir la carte entière</span></div>
+        <div class="cur">
+          <div class="stop-icon"><i class="ti ti-map-pin" style="font-size:19px;color:#C9A96E;"></i></div>
+          <div style="flex:1;min-width:0;">
+            <div class="stop-tag">Étape en cours</div>
+            <div class="stop-city">Akureyri</div>
+            <div class="stop-sub">Islande · 15 — 18 juin · 3 nuits</div>
+          </div>
+          <div class="wx"><i class="ti ti-cloud" style="font-size:13px;color:#85B7EB;"></i><strong>9°</strong></div>
+        </div>
+        <div class="divider"></div>
+        <div class="row-label">Itinéraire · 5 étapes</div>
+        <div class="cards-row">
+          <div class="nc" onclick="selectStep(this,1)"><div class="nn dn">01</div><div class="ncity dn">Reykjavík</div><div class="ndur dn">3 nuits</div><div class="cdot dn"></div></div>
+          <div class="nc" onclick="selectStep(this,2)"><div class="nn dn">02</div><div class="ncity dn">Vík</div><div class="ndur dn">2 nuits</div><div class="cdot dn"></div></div>
+          <div class="nc ac" onclick="selectStep(this,3)"><div class="nn ac">03</div><div class="ncity ac">Akureyri</div><div class="ndur ac">3 nuits</div><div class="cdot ac"></div></div>
+          <div class="nc" onclick="selectStep(this,4)"><div class="nn">04</div><div class="ncity">Mývatn</div><div class="ndur">2 nuits</div><div class="cdot"></div></div>
+          <div class="nc" onclick="selectStep(this,5)"><div class="nn">05</div><div class="ncity">Höfn</div><div class="ndur">3 nuits</div><div class="cdot"></div></div>
+        </div>
+        <div class="tab-bar">
+          <div class="tab" onclick="showOverlay('s1','detail')"><i class="ti ti-file-description ti2"></i><span class="tl">Détail</span></div>
+          <div class="tab" onclick="showOverlay('s1','voyage')"><i class="ti ti-list ti2"></i><span class="tl">Voyage</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay Détail sur Écran 1 -->
+    <div class="phone overlay-panel" id="s1-detail">
+      <div class="sbar"><span>9:41</span><span>●●●</span></div>
+      <div class="dheader">
+        <div class="dback" onclick="hideOverlay('s1','detail')"><i class="ti ti-chevron-left"></i></div>
+        <div class="dtitle-block">
+          <div class="detape">Étape 03 · En cours</div>
+          <div class="dcity">Akureyri</div>
+          <div class="dsub">15 — 18 juin · 3 nuits</div>
+        </div>
+      </div>
+      <div class="dmeta">
+        <div class="chip"><i class="ti ti-cloud" style="font-size:13px;color:#85B7EB;"></i><strong>9°</strong> Nuageux</div>
+        <div class="chip"><i class="ti ti-clock" style="font-size:13px;"></i>Arrivée dans <strong style="margin-left:3px;">2 jours</strong></div>
+      </div>
+      <div class="divider"></div>
+      <div class="sec-label">Informations</div>
+      <div class="section"><div class="sec-header"><div class="sec-ico bed"><i class="ti ti-bed" style="font-size:16px;color:#C9A96E;"></i></div><span class="sec-name">Hébergement</span><span class="sec-count">1 entrée</span><i class="ti ti-chevron-down sec-chev"></i></div></div>
+      <div class="section"><div class="sec-header"><div class="sec-ico fork"><i class="ti ti-tools-kitchen-2" style="font-size:16px;color:#378ADD;"></i></div><span class="sec-name">Restaurants</span><span class="sec-count">Vide</span><i class="ti ti-chevron-down sec-chev"></i></div></div>
+      <div class="section"><div class="sec-header"><div class="sec-ico act"><i class="ti ti-mountain" style="font-size:16px;color:#1D9E75;"></i></div><span class="sec-name">Activités</span><span class="sec-count">Vide</span><i class="ti ti-chevron-down sec-chev"></i></div></div>
+      <div style="height:8px;"></div>
+      <div class="divider"></div>
+      <div class="sec-label">Notes</div>
+      <div class="notes-block"><textarea class="notes-area" readonly>Louer un véhicule à l'arrivée. Aurores boréales si météo favorable.</textarea></div>
+      <button class="disc-btn"><i class="ti ti-sparkles" style="font-size:15px;color:#C9A96E;"></i>Découverte autour d'Akureyri</button>
+      <div class="tab-bar">
+        <div class="tab active" onclick="hideOverlay('s1','detail')"><i class="ti ti-file-description ti2 active"></i><span class="tl active">Détail</span></div>
+        <div class="tab" onclick="switchOverlay('s1','detail','voyage')"><i class="ti ti-list ti2"></i><span class="tl">Voyage</span></div>
+      </div>
+    </div>
+
+    <!-- Overlay Voyage sur Écran 1 -->
+    <div class="phone overlay-panel" id="s1-voyage">
+      <div class="sbar"><span>9:41</span><span>●●●</span></div>
+      <div class="voy-header"><div class="voy-title">Itinéraire</div><div class="voy-sub">Départ 8 juin · Retour 29 juin · 21 jours</div></div>
+      <div class="voy-list">
+        <div class="vstop" onclick="hideOverlay('s1','voyage')"><div class="vdot-col"><div class="vdot dn"></div><div class="vline"></div></div><div class="vinfo"><div class="vcity dn">Reykjavík</div><div class="vdates">8 — 11 juin · 3 nuits</div></div><div class="vstatus dn">Terminé</div></div>
+        <div class="vstop" onclick="hideOverlay('s1','voyage')"><div class="vdot-col"><div class="vdot dn"></div><div class="vline"></div></div><div class="vinfo"><div class="vcity dn">Vík</div><div class="vdates">12 — 14 juin · 2 nuits</div></div><div class="vstatus dn">Terminé</div></div>
+        <div class="vstop" onclick="hideOverlay('s1','voyage')"><div class="vdot-col"><div class="vdot ac"></div><div class="vline"></div></div><div class="vinfo"><div class="vcity">Akureyri</div><div class="vdates">15 — 18 juin · 3 nuits</div></div><div class="vstatus ac">En cours</div></div>
+        <div class="vstop" onclick="hideOverlay('s1','voyage')"><div class="vdot-col"><div class="vdot up"></div><div class="vline"></div></div><div class="vinfo"><div class="vcity up">Mývatn</div><div class="vdates">19 — 21 juin · 2 nuits</div></div><div class="vstatus up">À venir</div></div>
+        <div class="vstop" onclick="hideOverlay('s1','voyage')"><div class="vdot-col"><div class="vdot up"></div></div><div class="vinfo"><div class="vcity up">Höfn</div><div class="vdates">22 — 25 juin · 3 nuits</div></div><div class="vstatus up">À venir</div></div>
+      </div>
+      <div class="tap-hint"><i class="ti ti-hand-finger" style="font-size:13px;color:#C9A96E;"></i><span>Taper une étape pour revenir à la carte</span></div>
+      <div class="tab-bar">
+        <div class="tab" onclick="switchOverlay('s1','voyage','detail')"><i class="ti ti-file-description ti2"></i><span class="tl">Détail</span></div>
+        <div class="tab active" onclick="hideOverlay('s1','voyage')"><i class="ti ti-list ti2 active"></i><span class="tl active">Voyage</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉCRAN 2 — VOYAGE -->
+  <div class="screen-slot" id="s2">
+    <div class="screen-label">Écran 2 — Voyage</div>
+    <div class="phone base-phone">
+      <div class="sbar"><span>9:41</span><span>●●●</span></div>
+      <div class="voy-header"><div class="voy-title">Itinéraire</div><div class="voy-sub">Départ 8 juin · Retour 29 juin · 21 jours</div></div>
+      <div class="voy-list">
+        <div class="vstop"><div class="vdot-col"><div class="vdot dn"></div><div class="vline"></div></div><div class="vinfo"><div class="vcity dn">Reykjavík</div><div class="vdates">8 — 11 juin · 3 nuits</div></div><div class="vstatus dn">Terminé</div></div>
+        <div class="vstop"><div class="vdot-col"><div class="vdot dn"></div><div class="vline"></div></div><div class="vinfo"><div class="vcity dn">Vík</div><div class="vdates">12 — 14 juin · 2 nuits</div></div><div class="vstatus dn">Terminé</div></div>
+        <div class="vstop"><div class="vdot-col"><div class="vdot ac"></div><div class="vline"></div></div><div class="vinfo"><div class="vcity">Akureyri</div><div class="vdates">15 — 18 juin · 3 nuits</div></div><div class="vstatus ac">En cours</div></div>
+        <div class="vstop"><div class="vdot-col"><div class="vdot up"></div><div class="vline"></div></div><div class="vinfo"><div class="vcity up">Mývatn</div><div class="vdates">19 — 21 juin · 2 nuits</div></div><div class="vstatus up">À venir</div></div>
+        <div class="vstop"><div class="vdot-col"><div class="vdot up"></div></div><div class="vinfo"><div class="vcity up">Höfn</div><div class="vdates">22 — 25 juin · 3 nuits</div></div><div class="vstatus up">À venir</div></div>
+      </div>
+      <div class="tap-hint"><i class="ti ti-hand-finger" style="font-size:13px;color:#C9A96E;"></i><span>Taper une étape pour revenir à la carte</span></div>
+      <div class="tab-bar">
+        <div class="tab" onclick="showOverlay('s2','detail')"><i class="ti ti-file-description ti2"></i><span class="tl">Détail</span></div>
+        <div class="tab active"><i class="ti ti-list ti2 active"></i><span class="tl active">Voyage</span></div>
+      </div>
+    </div>
+    <!-- Overlay Détail sur Écran 2 -->
+    <div class="phone overlay-panel" id="s2-detail">
+      <div class="sbar"><span>9:41</span><span>●●●</span></div>
+      <div class="dheader">
+        <div class="dback" onclick="hideOverlay('s2','detail')"><i class="ti ti-chevron-left"></i></div>
+        <div class="dtitle-block">
+          <div class="detape">Étape 03 · En cours</div>
+          <div class="dcity">Akureyri</div>
+          <div class="dsub">15 — 18 juin · 3 nuits</div>
+        </div>
+      </div>
+      <div class="dmeta">
+        <div class="chip"><i class="ti ti-cloud" style="font-size:13px;color:#85B7EB;"></i><strong>9°</strong> Nuageux</div>
+        <div class="chip"><i class="ti ti-clock" style="font-size:13px;"></i>Arrivée dans <strong style="margin-left:3px;">2 jours</strong></div>
+      </div>
+      <div class="divider"></div>
+      <div class="sec-label">Informations</div>
+      <div class="section"><div class="sec-header"><div class="sec-ico bed"><i class="ti ti-bed" style="font-size:16px;color:#C9A96E;"></i></div><span class="sec-name">Hébergement</span><span class="sec-count">1 entrée</span><i class="ti ti-chevron-down sec-chev"></i></div></div>
+      <div class="section"><div class="sec-header"><div class="sec-ico fork"><i class="ti ti-tools-kitchen-2" style="font-size:16px;color:#378ADD;"></i></div><span class="sec-name">Restaurants</span><span class="sec-count">Vide</span><i class="ti ti-chevron-down sec-chev"></i></div></div>
+      <div class="section"><div class="sec-header"><div class="sec-ico act"><i class="ti ti-mountain" style="font-size:16px;color:#1D9E75;"></i></div><span class="sec-name">Activités</span><span class="sec-count">Vide</span><i class="ti ti-chevron-down sec-chev"></i></div></div>
+      <div style="height:8px;"></div><div class="divider"></div>
+      <div class="sec-label">Notes</div>
+      <div class="notes-block"><textarea class="notes-area" readonly>Louer un véhicule à l'arrivée. Aurores boréales si météo favorable.</textarea></div>
+      <button class="disc-btn"><i class="ti ti-sparkles" style="font-size:15px;color:#C9A96E;"></i>Découverte autour d'Akureyri</button>
+      <div class="tab-bar">
+        <div class="tab active" onclick="hideOverlay('s2','detail')"><i class="ti ti-file-description ti2 active"></i><span class="tl active">Détail</span></div>
+        <div class="tab"><i class="ti ti-list ti2"></i><span class="tl">Voyage</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉCRAN 3 — DÉTAIL -->
+  <div class="screen-slot" id="s3">
+    <div class="screen-label">Écran 3 — Détail <span style="font-size:9px;color:#3E5068;letter-spacing:1px;">(Phase 2)</span></div>
+    <div class="phone base-phone">
+      <div class="sbar"><span>9:41</span><span>●●●</span></div>
+      <div class="dheader">
+        <div class="dback"><i class="ti ti-chevron-left"></i></div>
+        <div class="dtitle-block">
+          <div class="detape">Étape 03 · En cours</div>
+          <div class="dcity">Akureyri</div>
+          <div class="dsub">15 — 18 juin · 3 nuits</div>
+        </div>
+      </div>
+      <div class="dmeta">
+        <div class="chip"><i class="ti ti-cloud" style="font-size:13px;color:#85B7EB;"></i><strong>9°</strong> Nuageux</div>
+        <div class="chip"><i class="ti ti-clock" style="font-size:13px;"></i>Arrivée dans <strong style="margin-left:3px;">2 jours</strong></div>
+      </div>
+      <div class="divider"></div>
+      <div class="sec-label">Informations</div>
+      <div class="section"><div class="sec-header"><div class="sec-ico bed"><i class="ti ti-bed" style="font-size:16px;color:#C9A96E;"></i></div><span class="sec-name">Hébergement</span><span class="sec-count">1 entrée</span><i class="ti ti-chevron-down sec-chev"></i></div></div>
+      <div class="section"><div class="sec-header"><div class="sec-ico fork"><i class="ti ti-tools-kitchen-2" style="font-size:16px;color:#378ADD;"></i></div><span class="sec-name">Restaurants</span><span class="sec-count">Vide</span><i class="ti ti-chevron-down sec-chev"></i></div></div>
+      <div class="section"><div class="sec-header"><div class="sec-ico act"><i class="ti ti-mountain" style="font-size:16px;color:#1D9E75;"></i></div><span class="sec-name">Activités</span><span class="sec-count">Vide</span><i class="ti ti-chevron-down sec-chev"></i></div></div>
+      <div style="height:8px;"></div><div class="divider"></div>
+      <div class="sec-label">Notes</div>
+      <div class="notes-block"><textarea class="notes-area" readonly>Louer un véhicule à l'arrivée. Aurores boréales si météo favorable.</textarea></div>
+      <button class="disc-btn"><i class="ti ti-sparkles" style="font-size:15px;color:#C9A96E;"></i>Découverte autour d'Akureyri</button>
+      <div class="tab-bar">
+        <div class="tab active"><i class="ti ti-file-description ti2 active"></i><span class="tl active">Détail</span></div>
+        <div class="tab"><i class="ti ti-list ti2"></i><span class="tl">Voyage</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- WORKFLOW -->
+<div class="workflow-section">
+  <div class="wf-title">Workflow de navigation</div>
+  <div class="wf-grid">
+    <div class="wf-card">
+      <div class="wf-card-title"><i class="ti ti-map-2"></i> Écran 1 — Carte</div>
+      <div class="wf-item"><i class="ti ti-arrow-right"></i><span>Onglet <strong>Détail</strong> → ouvre Écran 3 par-dessus</span></div>
+      <div class="wf-item"><i class="ti ti-arrow-right"></i><span>Onglet <strong>Voyage</strong> → ouvre Écran 2 par-dessus</span></div>
+      <div class="wf-item"><i class="ti ti-hand-finger"></i><span>Tap card carousel → carte recentrée + bottom sheet mis à jour</span></div>
+      <div class="wf-item"><i class="ti ti-hand-move"></i><span>Swipe down bottom sheet → carte plein écran</span></div>
+    </div>
+    <div class="wf-card">
+      <div class="wf-card-title"><i class="ti ti-list"></i> Écran 2 — Voyage</div>
+      <div class="wf-item"><i class="ti ti-hand-finger"></i><span>Tap étape → retour Écran 1, carte recentrée sur cette ville</span></div>
+      <div class="wf-item"><i class="ti ti-arrow-right"></i><span>Onglet <strong>Détail</strong> → ouvre Écran 3</span></div>
+      <div class="wf-item"><i class="ti ti-info-circle"></i><span>Étapes terminées restent consultables</span></div>
+    </div>
+    <div class="wf-card">
+      <div class="wf-card-title"><i class="ti ti-file-description"></i> Écran 3 — Détail <span style="font-size:10px;opacity:.5;">Phase 2</span></div>
+      <div class="wf-item"><i class="ti ti-arrow-left"></i><span>Flèche ← → retour Écran 1 (carte)</span></div>
+      <div class="wf-item"><i class="ti ti-sparkles"></i><span>Bouton Découverte → Écran 4</span></div>
+      <div class="wf-item"><i class="ti ti-pencil"></i><span>Crayon section → formulaire inline</span></div>
+      <div class="wf-item"><i class="ti ti-navigation"></i><span>Lien GPS si adresse localisable présente</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- À FAIRE -->
+<div class="todo-section">
+  <div class="todo-title">Reste à définir / maquetter</div>
+  <div class="todo-list">
+    <div class="todo-item"><i class="ti ti-circle"></i>Comportement visuel des étapes terminées dans le carousel</div>
+    <div class="todo-item"><i class="ti ti-circle"></i>Ajout d'une nouvelle étape à l'itinéraire (bouton + ?)</div>
+    <div class="todo-item"><i class="ti ti-circle"></i>Section vide dans Détail — état + bouton « + Ajouter »</div>
+    <div class="todo-item"><i class="ti ti-circle"></i>Plusieurs entrées par section (ex: 2 restaurants)</div>
+    <div class="todo-item"><i class="ti ti-circle"></i>Lien navigation GPS depuis une adresse — comportement exact</div>
+    <div class="todo-item"><i class="ti ti-circle"></i>Écran Découverte complet (Phase 3)</div>
+    <div class="todo-item"><i class="ti ti-circle"></i>Écran de création d'un nouveau voyage</div>
+    <div class="todo-item"><i class="ti ti-circle"></i>Gestion de plusieurs voyages (liste d'accueil)</div>
+    <div class="todo-item"><i class="ti ti-circle"></i>Notifications / rappels avant une étape</div>
+    <div class="todo-item"><i class="ti ti-circle"></i>Partage d'itinéraire</div>
+  </div>
+</div>
+
+<script>
+const steps = [
+  {city:'Reykjavík',sub:'Islande · 8 — 11 juin · 3 nuits',wx:'4°',wxIcon:'ti-snowflake',wxColor:'#85B7EB',status:'Terminé'},
+  {city:'Vík',sub:'Islande · 12 — 14 juin · 2 nuits',wx:'6°',wxIcon:'ti-cloud',wxColor:'#85B7EB',status:'Terminé'},
+  {city:'Akureyri',sub:'Islande · 15 — 18 juin · 3 nuits',wx:'9°',wxIcon:'ti-cloud',wxColor:'#85B7EB',status:'En cours'},
+  {city:'Mývatn',sub:'Islande · 19 — 21 juin · 2 nuits',wx:'7°',wxIcon:'ti-cloud-rain',wxColor:'#85B7EB',status:'À venir'},
+  {city:'Höfn',sub:'Islande · 22 — 25 juin · 3 nuits',wx:'8°',wxIcon:'ti-sun',wxColor:'#C9A96E',status:'À venir'}
+];
+
+function selectStep(el, idx){
+  document.querySelectorAll('#s1 .nc').forEach(c=>{
+    c.classList.remove('ac');
+    c.querySelector('.nn').className='nn';
+    c.querySelector('.ncity').className='ncity dn';
+    c.querySelector('.ndur').className='ndur dn';
+    c.querySelector('.cdot').className='cdot dn';
+  });
+  const s = steps[idx-1];
+  el.classList.add('ac');
+  el.querySelector('.nn').className='nn ac';
+  el.querySelector('.ncity').className='ncity ac';
+  el.querySelector('.ndur').className='ndur ac';
+  el.querySelector('.cdot').className='cdot ac';
+  document.querySelector('#s1 .stop-city').textContent=s.city;
+  document.querySelector('#s1 .stop-sub').textContent=s.sub;
+  const wx=document.querySelector('#s1 .wx');
+  wx.innerHTML=`<i class="ti ${s.wxIcon}" style="font-size:13px;color:${s.wxColor};"></i><strong>${s.wx}</strong>`;
+}
+
+function showOverlay(screenId, panel){
+  const slot = document.getElementById(screenId);
+  const overlay = document.getElementById(screenId+'-'+panel);
+  if(!overlay) return;
+  slot.classList.add('dimmed');
+  overlay.classList.add('visible');
+}
+function hideOverlay(screenId, panel){
+  const slot = document.getElementById(screenId);
+  const overlay = document.getElementById(screenId+'-'+panel);
+  if(!overlay) return;
+  overlay.classList.remove('visible');
+  const anyVisible = slot.querySelectorAll('.overlay-panel.visible').length > 0;
+  if(!anyVisible) slot.classList.remove('dimmed');
+}
+function switchOverlay(screenId, from, to){
+  hideOverlay(screenId, from);
+  setTimeout(()=>showOverlay(screenId, to), 150);
+}
+
+function showAll(){
+  document.querySelectorAll('.sw-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.screen-slot').forEach(s=>{s.style.display='';});
+}
+function showScreen(id){
+  document.querySelectorAll('.sw-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.screen-slot').forEach(s=>{
+    s.style.display = s.id===id ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

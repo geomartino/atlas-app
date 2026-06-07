@@ -1,0 +1,535 @@
+{
+  "meta": {
+    "version": "1.0",
+    "created_at": "2026-06-07",
+    "updated_at": "2026-06-07"
+  },
+  "voyage": {
+    "id": "bapteme-islandais-2026",
+    "nom": "Baptême islandais",
+    "pays": "Islande",
+    "depart": "2026-08-09",
+    "retour": "2026-08-22",
+    "duree_jours": 14,
+    "description": "Séjour libre à Reykjavík suivi d'un tour en autonomie du sud et de l'ouest de l'Islande en véhicule de location.",
+    "logistique": {
+      "vehicule": {
+        "type": "Toyota Yaris ou équivalent",
+        "prise_en_charge": "Reykjavík",
+        "restitution": "Aéroport de Keflavík",
+        "duree_jours": 8,
+        "assurance": "CDW incluse",
+        "kilometrage": "illimité"
+      }
+    }
+  },
+  "etapes": [
+    {
+      "id": "etape-01",
+      "numero": 1,
+      "titre": "Séjour libre à Reykjavík",
+      "type": "libre",
+      "date_arrivee": "2026-08-09",
+      "date_depart": "2026-08-14",
+      "nuits": 5,
+      "distance_km": null,
+      "coords": {
+        "lat": 64.1355,
+        "lng": -21.8954
+      },
+      "description": "Séjour libre à Reykjavík réservé par vos soins. Hébergement et activités à définir selon vos envies.",
+      "infos_pratiques": {
+        "note": "Hébergement réservé de façon indépendante, non inclus dans le forfait."
+      },
+      "hebergement": null,
+      "activites": [],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    },
+    {
+      "id": "etape-02",
+      "numero": 2,
+      "titre": "Reykjavík → Skógar",
+      "type": "guidee",
+      "date_arrivee": "2026-08-14",
+      "date_depart": "2026-08-15",
+      "nuits": 1,
+      "distance_km": 190,
+      "coords": {
+        "lat": 63.5284,
+        "lng": -19.5127
+      },
+      "description": "Route vers le sud et les glaciers Eyjafjallajökull et Mýrdalsjökull. Balade le long de la rivière Skógá à partir de la chute de Skógafoss. Découverte de la plage de sable noir de Reynishverfi et ses formations en orgues basaltiques.",
+      "infos_pratiques": {
+        "marche_heures": "3h30",
+        "inclus": ["location de voiture 8 jours", "assurance CDW", "kilométrage illimité", "chambre sanitaires privés", "petit-déjeuner"]
+      },
+      "hebergement": {
+        "nom": "Hotel Skógafoss",
+        "type": "Hôtel",
+        "chambre": "Chambre standard avec sanitaires privés",
+        "petit_dejeuner": true,
+        "adresse": "Skógar, Islande",
+        "coords": { "lat": 63.5284, "lng": -19.5127 },
+        "site_web": "http://hotelskogafoss.is",
+        "telephone": null,
+        "confirmation": null,
+        "lien_reservation": null
+      },
+      "activites": [
+        {
+          "id": "act-02-01",
+          "nom": "Chute de Skógafoss",
+          "type": "cascade",
+          "description": "Balade le long de la rivière Skógá depuis la chute de Skógafoss.",
+          "coords": { "lat": 63.5322, "lng": -19.5117 },
+          "duree": "2h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        },
+        {
+          "id": "act-02-02",
+          "nom": "Plage de Reynishverfi",
+          "type": "plage",
+          "description": "Plage de sable noir avec formations en orgues basaltiques.",
+          "coords": { "lat": 63.4047, "lng": -19.0444 },
+          "duree": "1h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        }
+      ],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    },
+    {
+      "id": "etape-03",
+      "numero": 3,
+      "titre": "Vík → Jökulsárlón → Skaftafell",
+      "type": "guidee",
+      "date_arrivee": "2026-08-15",
+      "date_depart": "2026-08-16",
+      "nuits": 1,
+      "distance_km": 270,
+      "coords": { "lat": 64.0559, "lng": -16.9772 },
+      "description": "Traversée des sables du Mýrdalssandur, coulée de lave couverte de mousse jusqu'à Kirkjubæjarklaustur. Randonnée dans les gorges de Fjarðrárgljúfur. Lagune glaciaire de Jökulsárlón avec icebergs dérivants.",
+      "infos_pratiques": {
+        "marche_heures": "2h30",
+        "inclus": ["chambre sanitaires privés", "petit-déjeuner"],
+        "option": "Balade en bateau sur la lagune de Jökulsárlón"
+      },
+      "hebergement": {
+        "nom": "Hotel Skaftafell",
+        "type": "Hôtel",
+        "chambre": "Chambre standard avec sanitaires privés",
+        "petit_dejeuner": true,
+        "adresse": "Skaftafell, Islande",
+        "coords": { "lat": 64.0559, "lng": -16.9772 },
+        "site_web": "http://hotelskaftafell.is",
+        "telephone": null,
+        "confirmation": null,
+        "lien_reservation": null
+      },
+      "activites": [
+        {
+          "id": "act-03-01",
+          "nom": "Gorges de Fjarðrárgljúfur",
+          "type": "randonnée",
+          "description": "Gorges finement sculptées par l'érosion.",
+          "coords": { "lat": 63.7722, "lng": -18.1731 },
+          "duree": "1h30",
+          "lien_navigation": null,
+          "sauvegarde": false
+        },
+        {
+          "id": "act-03-02",
+          "nom": "Lagune glaciaire de Jökulsárlón",
+          "type": "site naturel",
+          "description": "Icebergs dérivants sur un fjord. Balade en bateau en option.",
+          "coords": { "lat": 64.0784, "lng": -16.2306 },
+          "duree": "2h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        }
+      ],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    },
+    {
+      "id": "etape-04",
+      "numero": 4,
+      "titre": "Skaftafell",
+      "type": "guidee",
+      "date_arrivee": "2026-08-16",
+      "date_depart": "2026-08-17",
+      "nuits": 1,
+      "distance_km": 0,
+      "coords": { "lat": 64.0559, "lng": -16.9772 },
+      "description": "Journée de randonnée dans le parc national de Skaftafell, en bordure du glacier Vatnajökull. Randonnée vers la cascade de Svartifoss et ses orgues basaltiques, puis vers Krístinartindar ou la vallée glaciaire de Mórsárdalur.",
+      "infos_pratiques": {
+        "marche_heures": "5h à 7h",
+        "inclus": ["chambre sanitaires privés", "petit-déjeuner"]
+      },
+      "hebergement": {
+        "nom": "Hotel Skaftafell",
+        "type": "Hôtel",
+        "chambre": "Chambre standard avec sanitaires privés",
+        "petit_dejeuner": true,
+        "adresse": "Skaftafell, Islande",
+        "coords": { "lat": 64.0559, "lng": -16.9772 },
+        "site_web": "http://hotelskaftafell.is",
+        "telephone": null,
+        "confirmation": null,
+        "lien_reservation": null
+      },
+      "activites": [
+        {
+          "id": "act-04-01",
+          "nom": "Cascade de Svartifoss",
+          "type": "cascade",
+          "description": "Cascade entourée de colonnes basaltiques noires.",
+          "coords": { "lat": 64.0274, "lng": -16.9757 },
+          "duree": "2h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        },
+        {
+          "id": "act-04-02",
+          "nom": "Krístinartindar ou Mórsárdalur",
+          "type": "randonnée",
+          "description": "Pointe de Krístinartindar ou vallée glaciaire de Mórsárdalur selon l'envie.",
+          "coords": { "lat": 64.0400, "lng": -16.9900 },
+          "duree": "4h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        }
+      ],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    },
+    {
+      "id": "etape-05",
+      "numero": 5,
+      "titre": "Kirkjubæjarklaustur → Vík → Hvolsvöllur",
+      "type": "guidee",
+      "date_arrivee": "2026-08-17",
+      "date_depart": "2026-08-18",
+      "nuits": 1,
+      "distance_km": 150,
+      "coords": { "lat": 63.7528, "lng": -20.2336 },
+      "description": "Route vers Vík et Dyrhólaey et sa colonie de macareux moines. Direction la campagne de Hvolsvöllur.",
+      "infos_pratiques": {
+        "inclus": ["chambre sanitaires privés", "petit-déjeuner"],
+        "note_saisonniere": "Macareux moines visibles hors nidification (20 mai — 20 juin). Quittent les falaises vers le 15-20 août."
+      },
+      "hebergement": {
+        "nom": "Hotel Fljótshlíð — Smáratún",
+        "type": "Hôtel",
+        "chambre": "Chambre standard avec sanitaires privés",
+        "petit_dejeuner": true,
+        "adresse": "Hvolsvöllur, Islande",
+        "coords": { "lat": 63.7528, "lng": -20.2336 },
+        "site_web": "http://www.smaratun.is",
+        "telephone": null,
+        "confirmation": null,
+        "lien_reservation": null
+      },
+      "activites": [
+        {
+          "id": "act-05-01",
+          "nom": "Dyrhólaey",
+          "type": "site naturel",
+          "description": "Cap rocheux avec colonie de macareux moines et vue spectaculaire.",
+          "coords": { "lat": 63.4013, "lng": -19.1288 },
+          "duree": "1h30",
+          "lien_navigation": null,
+          "sauvegarde": false
+        }
+      ],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    },
+    {
+      "id": "etape-06",
+      "numero": 6,
+      "titre": "Fluðir → Gullfoss → Geysir → Reykholt",
+      "type": "guidee",
+      "date_arrivee": "2026-08-18",
+      "date_depart": "2026-08-19",
+      "nuits": 1,
+      "distance_km": 100,
+      "coords": { "lat": 64.1497, "lng": -20.8863 },
+      "description": "Le Cercle d'Or : Gullfoss, l'une des chutes les plus puissantes de l'île. Geyser Strokkur à Geysir. Forêt d'Haukadalsskógur et cascades de Brúárfoss.",
+      "infos_pratiques": {
+        "inclus": ["chambre sanitaires partagés", "petit-déjeuner"]
+      },
+      "hebergement": {
+        "nom": "Guesthouse Sel i Grimsnesi",
+        "type": "Guesthouse",
+        "chambre": "Chambre avec sanitaires partagés",
+        "petit_dejeuner": true,
+        "adresse": "Cercle d'Or, Islande",
+        "coords": { "lat": 64.1497, "lng": -20.8863 },
+        "site_web": null,
+        "telephone": null,
+        "confirmation": null,
+        "lien_reservation": null
+      },
+      "activites": [
+        {
+          "id": "act-06-01",
+          "nom": "Chutes de Gullfoss",
+          "type": "cascade",
+          "description": "L'une des chutes les plus puissantes d'Islande.",
+          "coords": { "lat": 64.3268, "lng": -20.1199 },
+          "duree": "1h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        },
+        {
+          "id": "act-06-02",
+          "nom": "Geyser Strokkur — Geysir",
+          "type": "site géologique",
+          "description": "Éruption toutes les 5-10 minutes.",
+          "coords": { "lat": 64.3106, "lng": -20.3021 },
+          "duree": "1h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        },
+        {
+          "id": "act-06-03",
+          "nom": "Cascades de Brúárfoss",
+          "type": "cascade",
+          "description": "Belle vue sur les montagnes environnantes.",
+          "coords": { "lat": 64.2894, "lng": -20.4644 },
+          "duree": "1h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        }
+      ],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    },
+    {
+      "id": "etape-07",
+      "numero": 7,
+      "titre": "Þingvellir → Borgarnes",
+      "type": "guidee",
+      "date_arrivee": "2026-08-19",
+      "date_depart": "2026-08-20",
+      "nuits": 1,
+      "distance_km": 180,
+      "coords": { "lat": 64.5432, "lng": -21.9127 },
+      "description": "Balade à Þingvellir — rift océanique et plus ancien parlement du monde. Chutes de Hraunfossar et Barnafoss, sources chaudes de Deildartunguhver (100°c). Cratères de Grábrók.",
+      "infos_pratiques": {
+        "inclus": ["chambre sanitaires partagés", "petit-déjeuner"]
+      },
+      "hebergement": {
+        "nom": "Lambalaekur",
+        "type": "Hébergement",
+        "chambre": "Chambre avec sanitaires partagés",
+        "petit_dejeuner": true,
+        "adresse": "Borgarnes, Islande",
+        "coords": { "lat": 64.5432, "lng": -21.9127 },
+        "site_web": null,
+        "telephone": null,
+        "confirmation": null,
+        "lien_reservation": null
+      },
+      "activites": [
+        {
+          "id": "act-07-01",
+          "nom": "Þingvellir",
+          "type": "site historique",
+          "description": "Rift océanique et site du plus ancien parlement au monde (930 apr. J.-C.).",
+          "coords": { "lat": 64.2559, "lng": -21.1300 },
+          "duree": "2h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        },
+        {
+          "id": "act-07-02",
+          "nom": "Chutes de Hraunfossar et Barnafoss",
+          "type": "cascade",
+          "description": "Chutes surgissant directement du champ de lave.",
+          "coords": { "lat": 64.7094, "lng": -20.9694 },
+          "duree": "1h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        },
+        {
+          "id": "act-07-03",
+          "nom": "Sources chaudes de Deildartunguhver",
+          "type": "site géologique",
+          "description": "Source chaude à 100°c — observation seulement.",
+          "coords": { "lat": 64.6944, "lng": -21.4097 },
+          "duree": "30min",
+          "lien_navigation": null,
+          "sauvegarde": false
+        },
+        {
+          "id": "act-07-04",
+          "nom": "Cratères de Grábrók",
+          "type": "volcan",
+          "description": "Vue imprenable depuis le sommet des cratères.",
+          "coords": { "lat": 64.7419, "lng": -21.6836 },
+          "duree": "1h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        }
+      ],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    },
+    {
+      "id": "etape-08",
+      "numero": 8,
+      "titre": "Parc National de Snæfellsjökull",
+      "type": "guidee",
+      "date_arrivee": "2026-08-20",
+      "date_depart": "2026-08-21",
+      "nuits": 1,
+      "distance_km": 150,
+      "coords": { "lat": 64.7680, "lng": -23.7756 },
+      "description": "Péninsule de Snæfellsnes dominée par le glacier-volcan Snæfellsjökull (Jules Verne). Côte nord : Stykkishólmur, Kirkjufell et Kirkjufellsfoss. Côte sud : Djúpalónssandur, falaises d'Arnarstapi et Hellnar.",
+      "infos_pratiques": {
+        "inclus": ["chambre sanitaires partagés", "petit-déjeuner"]
+      },
+      "hebergement": {
+        "nom": "Guesthouse Kast",
+        "type": "Guesthouse",
+        "chambre": "Chambre avec sanitaires partagés",
+        "petit_dejeuner": true,
+        "adresse": "Lysudalur, Snæfellsnes, Islande",
+        "coords": { "lat": 64.7680, "lng": -23.7756 },
+        "site_web": "http://www.kastguesthouse.is",
+        "telephone": null,
+        "confirmation": null,
+        "lien_reservation": null
+      },
+      "activites": [
+        {
+          "id": "act-08-01",
+          "nom": "Glacier-volcan Snæfellsjökull",
+          "type": "volcan",
+          "description": "Lieu du début du Voyage au centre de la Terre de Jules Verne.",
+          "coords": { "lat": 64.8081, "lng": -23.7756 },
+          "duree": "2h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        },
+        {
+          "id": "act-08-02",
+          "nom": "Kirkjufell et Kirkjufellsfoss",
+          "type": "site naturel",
+          "description": "Montagne emblématique et sa cascade au premier plan.",
+          "coords": { "lat": 64.9428, "lng": -23.3078 },
+          "duree": "1h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        },
+        {
+          "id": "act-08-03",
+          "nom": "Djúpalónssandur",
+          "type": "plage",
+          "description": "Plage de roches volcaniques déchiquetées par l'océan.",
+          "coords": { "lat": 64.7461, "lng": -23.9097 },
+          "duree": "1h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        },
+        {
+          "id": "act-08-04",
+          "nom": "Falaises d'Arnarstapi et Hellnar",
+          "type": "site naturel",
+          "description": "Colonies de mouettes tridactyles et de guillemots.",
+          "coords": { "lat": 64.7694, "lng": -23.6225 },
+          "duree": "1h30",
+          "lien_navigation": null,
+          "sauvegarde": false
+        }
+      ],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    },
+    {
+      "id": "etape-09",
+      "numero": 9,
+      "titre": "Borgarnes → Hvalfjörður → Reykjavík",
+      "type": "guidee",
+      "date_arrivee": "2026-08-21",
+      "date_depart": "2026-08-22",
+      "nuits": 1,
+      "distance_km": 120,
+      "coords": { "lat": 64.1355, "lng": -21.8954 },
+      "description": "Côte sud de Snæfellsnes, randonnée possible au cratère d'Eldborg. Fjord de Hvalfjörður et randonnée vers la chute de Glýmur, la plus haute du pays. Retour à Reykjavík en fin d'après-midi.",
+      "infos_pratiques": {
+        "inclus": ["chambre sanitaires privés", "petit-déjeuner"]
+      },
+      "hebergement": {
+        "nom": "Kex Hostel",
+        "type": "Hostel",
+        "chambre": "Chambre classique avec sanitaires privés",
+        "petit_dejeuner": true,
+        "adresse": "Skúlagata 28, 101 Reykjavík, Islande",
+        "coords": { "lat": 64.1478, "lng": -21.9389 },
+        "site_web": "http://www.kexhostel.is",
+        "telephone": null,
+        "confirmation": null,
+        "lien_reservation": null
+      },
+      "activites": [
+        {
+          "id": "act-09-01",
+          "nom": "Cratère d'Eldborg",
+          "type": "volcan",
+          "description": "Randonnée possible pour découvrir ce cratère volcanique.",
+          "coords": { "lat": 64.7761, "lng": -22.3450 },
+          "duree": "2h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        },
+        {
+          "id": "act-09-02",
+          "nom": "Chute de Glýmur",
+          "type": "cascade",
+          "description": "La plus haute chute du pays dans un décor de gorges verdoyantes.",
+          "coords": { "lat": 64.3897, "lng": -21.3817 },
+          "duree": "3h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        }
+      ],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    },
+    {
+      "id": "etape-10",
+      "numero": 10,
+      "titre": "Reykjavík → Aéroport de Keflavík",
+      "type": "depart",
+      "date_arrivee": "2026-08-22",
+      "date_depart": "2026-08-22",
+      "nuits": 0,
+      "distance_km": 50,
+      "coords": { "lat": 63.9850, "lng": -22.6056 },
+      "description": "Route vers l'aéroport international de Keflavík et restitution du véhicule de location.",
+      "infos_pratiques": {
+        "restitution_vehicule": "Aéroport de Keflavík"
+      },
+      "hebergement": null,
+      "activites": [],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    }
+  ]
+}

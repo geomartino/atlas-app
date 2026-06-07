@@ -1,0 +1,7 @@
+# .gitignore
+.env
+.env.local
+
+# build output
+dist/
+node_modules/

@@ -1,0 +1,34 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --gold: #C9A96E;
+  --gold-dim: rgba(201, 169, 110, 0.15);
+  --gold-border: rgba(201, 169, 110, 0.3);
+  --bg: #080C12;
+  --surface: #0D1117;
+  --card: #111820;
+  --card2: #1A2535;
+  --border: #1E2A3A;
+  --border2: #2A3545;
+  --text: #E8E2D5;
+  --text2: #A8B8CC;
+  --text3: #6A7A90;
+  --text4: #3E5068;
+  --text5: #2E3D50;
+  --blue: #378ADD;
+  --green: #1D9E75;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
