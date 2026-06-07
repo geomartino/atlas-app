@@ -23,13 +23,13 @@ function markerEl(etape: Etape, isSelected: boolean): HTMLElement {
   } else if (statut === 'termine') {
     el.style.cssText = `
       width: 11px; height: 11px; border-radius: 50%;
-      background: #2E4055; cursor: pointer;
+      background: #94A3B8; cursor: pointer;
     `
   } else {
     el.style.cssText = `
       width: 11px; height: 11px; border-radius: 50%;
       background: transparent;
-      border: 1.5px solid #2E4055;
+      border: 1.5px solid #94A3B8;
       cursor: pointer;
     `
   }
@@ -71,12 +71,12 @@ export default function MapView() {
         id: 'route-line',
         type: 'line',
         source: 'route',
-        layout: { 'line-join': 'round', 'line-cap': 'round' },
+        layout: { 'line-join': 'round', 'line-cap': 'butt' },
         paint: {
-          'line-color': '#C9A96E',
-          'line-width': 1.5,
-          'line-dasharray': [2, 4],
-          'line-opacity': 0.6,
+          'line-color': '#DC2626',
+          'line-width': 2,
+          'line-dasharray': [4, 3],
+          'line-opacity': 0.85,
         },
       })
 
