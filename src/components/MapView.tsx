@@ -6,28 +6,7 @@ import { getStatut } from '../lib/statut'
 import type { Etape } from '../types'
 import styles from './MapView.module.css'
 
-const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY as string | undefined
-const hasValidKey = !!MAPTILER_KEY && MAPTILER_KEY !== 'your_maptiler_key_here'
-
-const CARTO_DARK_STYLE: maplibregl.StyleSpecification = {
-  version: 8,
-  sources: {
-    carto: {
-      type: 'raster',
-      tiles: [
-        'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
-        'https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
-      ],
-      tileSize: 256,
-      attribution: '© OpenStreetMap contributors © CARTO',
-    },
-  },
-  layers: [{ id: 'carto-dark', type: 'raster', source: 'carto' }],
-}
-
-const MAP_STYLE = hasValidKey
-  ? `https://api.maptiler.com/maps/outdoor-v2/style.json?key=${MAPTILER_KEY}`
-  : CARTO_DARK_STYLE
+const MAP_STYLE = 'https://tiles.openfreemap.org/styles/bright'
 
 function markerEl(etape: Etape, isSelected: boolean): HTMLElement {
   const statut = getStatut(etape)
