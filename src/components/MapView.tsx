@@ -26,7 +26,7 @@ const CARTO_DARK_STYLE: maplibregl.StyleSpecification = {
 }
 
 const MAP_STYLE = hasValidKey
-  ? `https://api.maptiler.com/maps/streets-v2-dark/style.json?key=${MAPTILER_KEY}`
+  ? `https://api.maptiler.com/maps/outdoor-v2/style.json?key=${MAPTILER_KEY}`
   : CARTO_DARK_STYLE
 
 function markerEl(etape: Etape, isSelected: boolean): HTMLElement {
