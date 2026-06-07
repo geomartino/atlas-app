@@ -22,10 +22,11 @@ export function VoyageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function load() {
       try {
-        const configRes = await fetch('/config.json')
+        const base = import.meta.env.BASE_URL
+        const configRes = await fetch(`${base}config.json`)
         const config = await configRes.json() as { voyage_actif: string }
 
-        const voyageRes = await fetch(`/voyages/${config.voyage_actif}`)
+        const voyageRes = await fetch(`${base}voyages/${config.voyage_actif}`)
         const data = await voyageRes.json() as VoyageData
 
         await seedDB(data.etapes)
