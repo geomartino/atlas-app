@@ -8,38 +8,25 @@ import styles from './MapView.module.css'
 
 const MAP_STYLE = 'https://tiles.openfreemap.org/styles/bright'
 
-function markerEl(etape: Etape, isSelected: boolean): HTMLElement {
-  const statut = getStatut(etape)
-  const el = document.createElement('div')
-  el.className = `marker marker-${statut}${isSelected ? ' marker-selected' : ''}`
-
-  if (statut === 'en_cours' || isSelected) {
-    el.style.cssText = `
-      width: 14px; height: 14px; border-radius: 50%;
-      background: #C9A96E;
-      box-shadow: 0 0 0 4px rgba(201,169,110,0.25), 0 0 12px rgba(201,169,110,0.4);
-      cursor: pointer;
-    `
-  } else if (statut === 'termine') {
-    el.style.cssText = `
-      width: 11px; height: 11px; border-radius: 50%;
-      background: #94A3B8; cursor: pointer;
-    `
-  } else {
-    el.style.cssText = `
-      width: 11px; height: 11px; border-radius: 50%;
-      background: transparent;
-      border: 1.5px solid #94A3B8;
-      cursor: pointer;
-    `
+function buildMarkersGeoJSON(etapes: Etape[], selectedIndex: number) {
+  return {
+    type: 'FeatureCollection' as const,
+    features: etapes.map((e, idx) => ({
+      type: 'Feature' as const,
+      geometry: { type: 'Point' as const, coordinates: [e.coords.lng, e.coords.lat] },
+      properties: {
+        idx,
+        statut: getStatut(e),
+        isSelected: idx === selectedIndex ? 1 : 0,
+      },
+    })),
   }
-  return el
 }
 
 export default function MapView() {
   const { etapes, selectedIndex, selectStep, loading, mapRef, geolocateRef } = useVoyage()
   const mapContainerRef = useRef<HTMLDivElement>(null)
-  const markersRef = useRef<maplibregl.Marker[]>([])
+  const mapLoadedRef = useRef(false)
 
   useEffect(() => {
     if (loading || !mapContainerRef.current || etapes.length === 0) return
@@ -60,8 +47,11 @@ export default function MapView() {
     })
 
     mapRef.current = map
+    mapLoadedRef.current = false
 
     map.on('load', () => {
+      mapLoadedRef.current = true
+
       const geolocate = new maplibregl.GeolocateControl({
         positionOptions: { enableHighAccuracy: true },
         trackUserLocation: true,
@@ -75,7 +65,7 @@ export default function MapView() {
         duration: 0,
       })
 
-      // Route layer
+      // Route line
       const coords = etapes.map(e => [e.coords.lng, e.coords.lat])
       map.addSource('route', {
         type: 'geojson',
@@ -98,43 +88,103 @@ export default function MapView() {
         },
       })
 
-      // Markers
-      etapes.forEach((etape, idx) => {
-        const el = markerEl(etape, idx === selectedIndex)
-        const marker = new maplibregl.Marker({ element: el })
-          .setLngLat([etape.coords.lng, etape.coords.lat])
-          .addTo(map)
-        el.addEventListener('click', () => selectStep(idx))
-        markersRef.current.push(marker)
+      // Step markers as GeoJSON circles — same WebGL engine as the route line,
+      // pixel-perfect alignment guaranteed.
+      map.addSource('markers', {
+        type: 'geojson',
+        data: buildMarkersGeoJSON(etapes, selectedIndex),
       })
+
+      // Glow ring for active / selected
+      map.addLayer({
+        id: 'markers-glow',
+        type: 'circle',
+        source: 'markers',
+        filter: ['any', ['==', ['get', 'isSelected'], 1], ['==', ['get', 'statut'], 'en_cours']],
+        paint: {
+          'circle-radius': 14,
+          'circle-color': 'rgba(201,169,110,0.18)',
+          'circle-blur': 0.6,
+        },
+      })
+
+      // Stroke ring for "à venir"
+      map.addLayer({
+        id: 'markers-stroke',
+        type: 'circle',
+        source: 'markers',
+        filter: ['all',
+          ['==', ['get', 'statut'], 'a_venir'],
+          ['==', ['get', 'isSelected'], 0],
+        ],
+        paint: {
+          'circle-radius': 6,
+          'circle-color': 'rgba(0,0,0,0)',
+          'circle-stroke-width': 1.5,
+          'circle-stroke-color': '#4A6080',
+        },
+      })
+
+      // Fill dot for terminé / en_cours / selected
+      map.addLayer({
+        id: 'markers-fill',
+        type: 'circle',
+        source: 'markers',
+        filter: ['any',
+          ['==', ['get', 'statut'], 'termine'],
+          ['==', ['get', 'statut'], 'en_cours'],
+          ['==', ['get', 'isSelected'], 1],
+        ],
+        paint: {
+          'circle-radius': [
+            'case',
+            ['any', ['==', ['get', 'isSelected'], 1], ['==', ['get', 'statut'], 'en_cours']], 8,
+            5,
+          ],
+          'circle-color': [
+            'case',
+            ['any', ['==', ['get', 'isSelected'], 1], ['==', ['get', 'statut'], 'en_cours']], '#C9A96E',
+            '#3A5070',
+          ],
+        },
+      })
+
+      const handleClick = (e: maplibregl.MapLayerMouseEvent) => {
+        const feat = e.features?.[0]
+        if (feat) {
+          const idx = feat.properties?.idx as number
+          if (typeof idx === 'number') selectStep(idx)
+        }
+      }
+
+      map.on('click', 'markers-fill', handleClick)
+      map.on('click', 'markers-stroke', handleClick)
+      map.on('mouseenter', 'markers-fill', () => { map.getCanvas().style.cursor = 'pointer' })
+      map.on('mouseleave', 'markers-fill', () => { map.getCanvas().style.cursor = '' })
+      map.on('mouseenter', 'markers-stroke', () => { map.getCanvas().style.cursor = 'pointer' })
+      map.on('mouseleave', 'markers-stroke', () => { map.getCanvas().style.cursor = '' })
     })
 
     return () => {
-      markersRef.current = []
+      mapLoadedRef.current = false
       map.remove()
       mapRef.current = null
     }
   }, [loading, etapes])
 
-  // Fly to selected step & refresh markers
+  // Update selected marker highlight + fly to step
   useEffect(() => {
     const map = mapRef.current
-    if (!map || etapes.length === 0) return
+    if (!map || etapes.length === 0 || !mapLoadedRef.current) return
+
+    const src = map.getSource('markers') as maplibregl.GeoJSONSource | undefined
+    src?.setData(buildMarkersGeoJSON(etapes, selectedIndex))
 
     const selected = etapes[selectedIndex]
     const lngs = etapes.map(e => e.coords.lng)
     const span = Math.max(...lngs) - Math.min(...lngs)
     const flyZoom = span < 1 ? 13 : span < 5 ? 10 : 8
     map.flyTo({ center: [selected.coords.lng, selected.coords.lat], zoom: flyZoom, duration: 800 })
-
-    markersRef.current.forEach((marker, idx) => {
-      const el = markerEl(etapes[idx]!, idx === selectedIndex)
-      marker.getElement().replaceWith(el)
-      // Re-attach click since we replaced the element
-      el.addEventListener('click', () => selectStep(idx))
-      // MapLibre marker keeps its position; we just swapped the DOM element
-      ;(marker as unknown as { _element: HTMLElement })._element = el
-    })
   }, [selectedIndex])
 
   return <div ref={mapContainerRef} className={styles.map} />
