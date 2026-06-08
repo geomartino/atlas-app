@@ -25,7 +25,7 @@ export default function TabBar({ activeScreen, onTabChange }: Props) {
         onClick={() => toggle('voyage')}
       >
         <i className="ti ti-list" />
-        <span>Voyage</span>
+        <span>Itinéraire</span>
       </button>
     </div>
   )
