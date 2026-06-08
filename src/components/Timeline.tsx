@@ -13,6 +13,10 @@ const BADGE_LABELS: Record<string, string> = {
   a_venir: 'À venir',
 }
 
+function isComplete(statut: string, id: string, completedIds: Set<string>): boolean {
+  return statut === 'termine' || statut === 'en_cours' || completedIds.has(id)
+}
+
 export default function Timeline({ onSelectStep }: { onSelectStep: (idx: number) => void }) {
   const { etapes, completedIds, toggleCompleted } = useVoyage()
 
@@ -27,11 +31,19 @@ export default function Timeline({ onSelectStep }: { onSelectStep: (idx: number)
           ? `${styles.dot} ${styles.dot_a_venir_completed}`
           : `${styles.dot} ${styles[`dot_${statut}`]}`
 
+        const nextEtape = etapes[idx + 1]
+        const nextStatut = nextEtape ? getStatut(nextEtape) : null
+        const lineGold = !isLast
+          && isComplete(statut, etape.id, completedIds)
+          && nextEtape !== undefined
+          && nextStatut !== null
+          && isComplete(nextStatut, nextEtape.id, completedIds)
+
         return (
           <div key={etape.id} className={`${styles.item} ${styles[statut]}`}>
             <div className={styles.lineCol}>
               <div className={dotClass} />
-              {!isLast && <div className={styles.line} />}
+              {!isLast && <div className={`${styles.line}${lineGold ? ` ${styles.line_gold}` : ''}`} />}
             </div>
             <div className={styles.body}>
               <div className={styles.row}>

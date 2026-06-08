@@ -55,6 +55,10 @@
   min-height: 20px;
 }
 
+.line_gold {
+  background: rgba(201, 169, 110, 0.55);
+}
+
 .body {
   display: flex;
   flex-direction: column;
