@@ -65,7 +65,6 @@ export default function MapView() {
       const geolocate = new maplibregl.GeolocateControl({
         positionOptions: { enableHighAccuracy: true },
         trackUserLocation: true,
-        showUserHeading: true,
       })
       map.addControl(geolocate, 'bottom-right')
       geolocateRef.current = geolocate
