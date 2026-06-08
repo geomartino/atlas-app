@@ -102,7 +102,11 @@ export default function DetailScreen({ activeScreen, onTabChange }: Props) {
     if (!etape) return
     setMeteo(null)
     setNotesValue(etape.notes)
-    setOpenSections(new Set())
+    const defaultOpen = new Set<string>()
+    if (etape.hebergement) defaultOpen.add('hebergement')
+    if (etape.restaurants.length > 0) defaultOpen.add('restaurants')
+    if (etape.activites.length > 0) defaultOpen.add('activites')
+    setOpenSections(defaultOpen)
     fetchMeteo(etape.coords.lat, etape.coords.lng)
       .then(setMeteo)
       .catch(() => null)
