@@ -1,0 +1,20 @@
+[
+  {
+    "file": "bapteme-islandais-2026.json",
+    "nom": "Baptême islandais",
+    "pays": "Islande",
+    "emoji": "🌋"
+  },
+  {
+    "file": "vieux-quebec-2026.json",
+    "nom": "Vieux-Québec",
+    "pays": "Canada",
+    "emoji": "🏰"
+  },
+  {
+    "file": "saint-hubert-2026.json",
+    "nom": "Saint-Hubert",
+    "pays": "Canada",
+    "emoji": "🏘️"
+  }
+]

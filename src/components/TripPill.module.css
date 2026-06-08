@@ -1,6 +1,6 @@
 .pill {
   position: absolute;
-  top: 48px;
+  top: 12px;
   left: 16px;
   right: 16px;
   z-index: 20;
@@ -19,13 +19,17 @@
   display: flex;
   flex-direction: column;
   gap: 1px;
+  min-width: 0;
 }
 
 .title {
   font-family: 'Syne', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 800;
   color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .meta {
@@ -41,4 +45,81 @@
   font-size: 11px;
   font-weight: 500;
   flex-shrink: 0;
+}
+
+/* ── Menu ⋯ ── */
+.menuWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.menuBtn {
+  background: transparent;
+  border: none;
+  color: var(--text3);
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  padding: 2px 4px;
+  border-radius: 8px;
+  transition: color 0.2s;
+}
+
+.menuBtn:hover {
+  color: var(--text);
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background: #131C28;
+  border: 0.5px solid var(--border2);
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.dropSection {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text4);
+  padding: 6px 10px 4px;
+}
+
+.dropItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  color: var(--text2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.dropItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dropItemActive {
+  color: var(--text);
+  background: rgba(201, 169, 110, 0.08);
+}
+
+.dropDivider {
+  height: 0.5px;
+  background: var(--border);
+  margin: 4px 6px;
 }

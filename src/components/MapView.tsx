@@ -37,26 +37,45 @@ function markerEl(etape: Etape, isSelected: boolean): HTMLElement {
 }
 
 export default function MapView() {
-  const { etapes, selectedIndex, selectStep, loading } = useVoyage()
+  const { etapes, selectedIndex, selectStep, loading, mapRef, geolocateRef } = useVoyage()
   const mapContainerRef = useRef<HTMLDivElement>(null)
-  const mapRef = useRef<maplibregl.Map | null>(null)
   const markersRef = useRef<maplibregl.Marker[]>([])
 
   useEffect(() => {
     if (loading || !mapContainerRef.current || etapes.length === 0) return
 
-    const selected = etapes[selectedIndex]
+    const lngs = etapes.map(e => e.coords.lng)
+    const lats = etapes.map(e => e.coords.lat)
+    const bounds: maplibregl.LngLatBoundsLike = [
+      [Math.min(...lngs), Math.min(...lats)],
+      [Math.max(...lngs), Math.max(...lats)],
+    ]
+
     const map = new maplibregl.Map({
       container: mapContainerRef.current,
       style: MAP_STYLE,
-      center: [selected.coords.lng, selected.coords.lat],
-      zoom: 7,
+      center: [lngs.reduce((a, b) => a + b, 0) / lngs.length, lats.reduce((a, b) => a + b, 0) / lats.length],
+      zoom: 5,
       attributionControl: false,
     })
 
     mapRef.current = map
 
     map.on('load', () => {
+      const geolocate = new maplibregl.GeolocateControl({
+        positionOptions: { enableHighAccuracy: true },
+        trackUserLocation: true,
+        showUserHeading: true,
+      })
+      map.addControl(geolocate, 'bottom-right')
+      geolocateRef.current = geolocate
+
+      map.fitBounds(bounds, {
+        padding: { top: 110, bottom: 320, left: 60, right: 60 },
+        maxZoom: 12,
+        duration: 0,
+      })
+
       // Route layer
       const coords = etapes.map(e => [e.coords.lng, e.coords.lat])
       map.addSource('route', {
@@ -104,7 +123,10 @@ export default function MapView() {
     if (!map || etapes.length === 0) return
 
     const selected = etapes[selectedIndex]
-    map.flyTo({ center: [selected.coords.lng, selected.coords.lat], zoom: 8, duration: 800 })
+    const lngs = etapes.map(e => e.coords.lng)
+    const span = Math.max(...lngs) - Math.min(...lngs)
+    const flyZoom = span < 1 ? 13 : span < 5 ? 10 : 8
+    map.flyTo({ center: [selected.coords.lng, selected.coords.lat], zoom: flyZoom, duration: 800 })
 
     markersRef.current.forEach((marker, idx) => {
       const el = markerEl(etapes[idx]!, idx === selectedIndex)

@@ -34,8 +34,8 @@
       "nuits": 5,
       "distance_km": null,
       "coords": {
-        "lat": 64.1355,
-        "lng": -21.8954
+        "lat": 64.1460,
+        "lng": -21.9422
       },
       "description": "Séjour libre à Reykjavík réservé par vos soins. Hébergement et activités à définir selon vos envies.",
       "infos_pratiques": {
@@ -112,7 +112,7 @@
       "date_depart": "2026-08-16",
       "nuits": 1,
       "distance_km": 270,
-      "coords": { "lat": 64.0559, "lng": -16.9772 },
+      "coords": { "lat": 64.0165, "lng": -16.9665 },
       "description": "Traversée des sables du Mýrdalssandur, coulée de lave couverte de mousse jusqu'à Kirkjubæjarklaustur. Randonnée dans les gorges de Fjarðrárgljúfur. Lagune glaciaire de Jökulsárlón avec icebergs dérivants.",
       "infos_pratiques": {
         "marche_heures": "2h30",
@@ -166,7 +166,7 @@
       "date_depart": "2026-08-17",
       "nuits": 1,
       "distance_km": 0,
-      "coords": { "lat": 64.0559, "lng": -16.9772 },
+      "coords": { "lat": 64.0165, "lng": -16.9665 },
       "description": "Journée de randonnée dans le parc national de Skaftafell, en bordure du glacier Vatnajökull. Randonnée vers la cascade de Svartifoss et ses orgues basaltiques, puis vers Krístinartindar ou la vallée glaciaire de Mórsárdalur.",
       "infos_pratiques": {
         "marche_heures": "5h à 7h",
@@ -262,7 +262,7 @@
       "date_depart": "2026-08-19",
       "nuits": 1,
       "distance_km": 100,
-      "coords": { "lat": 64.1497, "lng": -20.8863 },
+      "coords": { "lat": 64.1306, "lng": -20.3209 },
       "description": "Le Cercle d'Or : Gullfoss, l'une des chutes les plus puissantes de l'île. Geyser Strokkur à Geysir. Forêt d'Haukadalsskógur et cascades de Brúárfoss.",
       "infos_pratiques": {
         "inclus": ["chambre sanitaires partagés", "petit-déjeuner"]
@@ -273,7 +273,7 @@
         "chambre": "Chambre avec sanitaires partagés",
         "petit_dejeuner": true,
         "adresse": "Cercle d'Or, Islande",
-        "coords": { "lat": 64.1497, "lng": -20.8863 },
+        "coords": { "lat": 64.1306, "lng": -20.3209 },
         "site_web": null,
         "telephone": null,
         "confirmation": null,
@@ -324,7 +324,7 @@
       "date_depart": "2026-08-20",
       "nuits": 1,
       "distance_km": 180,
-      "coords": { "lat": 64.5432, "lng": -21.9127 },
+      "coords": { "lat": 64.5383, "lng": -21.9202 },
       "description": "Balade à Þingvellir — rift océanique et plus ancien parlement du monde. Chutes de Hraunfossar et Barnafoss, sources chaudes de Deildartunguhver (100°c). Cratères de Grábrók.",
       "infos_pratiques": {
         "inclus": ["chambre sanitaires partagés", "petit-déjeuner"]
@@ -468,7 +468,7 @@
       "date_depart": "2026-08-22",
       "nuits": 1,
       "distance_km": 120,
-      "coords": { "lat": 64.1355, "lng": -21.8954 },
+      "coords": { "lat": 64.1460, "lng": -21.9422 },
       "description": "Côte sud de Snæfellsnes, randonnée possible au cratère d'Eldborg. Fjord de Hvalfjörður et randonnée vers la chute de Glýmur, la plus haute du pays. Retour à Reykjavík en fin d'après-midi.",
       "infos_pratiques": {
         "inclus": ["chambre sanitaires privés", "petit-déjeuner"]
@@ -520,7 +520,7 @@
       "date_depart": "2026-08-22",
       "nuits": 0,
       "distance_km": 50,
-      "coords": { "lat": 63.9850, "lng": -22.6056 },
+      "coords": { "lat": 63.9950, "lng": -22.6239 },
       "description": "Route vers l'aéroport international de Keflavík et restitution du véhicule de location.",
       "infos_pratiques": {
         "restitution_vehicule": "Aéroport de Keflavík"

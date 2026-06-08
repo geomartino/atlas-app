@@ -24,3 +24,7 @@ export async function seedDB(etapes: Etape[]): Promise<void> {
 export async function getAllEtapes(): Promise<Etape[]> {
   return db.etapes.orderBy('numero').toArray()
 }
+
+export async function clearDB(): Promise<void> {
+  await db.etapes.clear()
+}

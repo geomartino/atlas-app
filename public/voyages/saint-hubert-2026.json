@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "version": "1.0",
+    "created_at": "2026-06-07",
+    "updated_at": "2026-06-07"
+  },
+  "voyage": {
+    "id": "saint-hubert-2026",
+    "nom": "Saint-Hubert",
+    "pays": "Canada",
+    "depart": "2026-06-08",
+    "retour": "2026-06-10",
+    "duree_jours": 3,
+    "description": "Exploration du quartier de Saint-Hubert autour du 3990 chemin de Chambly.",
+    "logistique": {}
+  },
+  "etapes": [
+    {
+      "id": "sh-01",
+      "numero": 1,
+      "titre": "3990 Ch. de Chambly — Point de départ",
+      "type": "libre",
+      "date_arrivee": "2026-06-08",
+      "date_depart": "2026-06-09",
+      "nuits": 1,
+      "distance_km": null,
+      "coords": { "lat": 45.5120, "lng": -73.4391 },
+      "description": "Point de départ au 3990 chemin de Chambly, Saint-Hubert.",
+      "infos_pratiques": {},
+      "hebergement": null,
+      "activites": [
+        {
+          "id": "sh-01-01",
+          "nom": "3990 Ch. de Chambly",
+          "type": "point de départ",
+          "description": "Point de départ de l'exploration du quartier.",
+          "coords": { "lat": 45.5120, "lng": -73.4391 },
+          "duree": "30min",
+          "lien_navigation": null,
+          "sauvegarde": false
+        }
+      ],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    },
+    {
+      "id": "sh-02",
+      "numero": 2,
+      "titre": "Parc Michel-Chartrand",
+      "type": "guidee",
+      "date_arrivee": "2026-06-09",
+      "date_depart": "2026-06-10",
+      "nuits": 1,
+      "distance_km": 5,
+      "coords": { "lat": 45.5501, "lng": -73.4692 },
+      "description": "Grand parc naturel de Longueuil avec sentiers, étangs et aire de pique-nique.",
+      "infos_pratiques": {},
+      "hebergement": null,
+      "activites": [
+        {
+          "id": "sh-02-01",
+          "nom": "Parc Michel-Chartrand",
+          "type": "parc",
+          "description": "Vaste parc urbain avec sentiers pédestres, étangs et faune locale.",
+          "coords": { "lat": 45.5501, "lng": -73.4692 },
+          "duree": "2h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        }
+      ],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    },
+    {
+      "id": "sh-03",
+      "numero": 3,
+      "titre": "Boulevard Cousineau",
+      "type": "depart",
+      "date_arrivee": "2026-06-10",
+      "date_depart": "2026-06-10",
+      "nuits": 0,
+      "distance_km": 8,
+      "coords": { "lat": 45.4816, "lng": -73.3897 },
+      "description": "Artère commerciale principale de Saint-Hubert.",
+      "infos_pratiques": {},
+      "hebergement": null,
+      "activites": [
+        {
+          "id": "sh-03-01",
+          "nom": "Boulevard Cousineau",
+          "type": "quartier",
+          "description": "Artère commerciale avec restaurants et services de Saint-Hubert.",
+          "coords": { "lat": 45.4816, "lng": -73.3897 },
+          "duree": "1h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        }
+      ],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    }
+  ]
+}

@@ -1,21 +1,28 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback, useRef, type ReactNode } from 'react'
+import type maplibregl from 'maplibre-gl'
 import type { Voyage, Etape, VoyageData } from '../types'
-import { seedDB, getAllEtapes } from '../lib/db'
+import { seedDB, getAllEtapes, clearDB } from '../lib/db'
 import { getEtapeEnCours } from '../lib/statut'
 
-const LS_KEY = 'atlas-completed-steps'
+const LS_COMPLETED = 'atlas-completed-steps'
+const LS_VOYAGE    = 'atlas-voyage-actif'
 
 function loadCompleted(): Set<string> {
   try {
-    const raw = localStorage.getItem(LS_KEY)
+    const raw = localStorage.getItem(LS_COMPLETED)
     return raw ? new Set(JSON.parse(raw) as string[]) : new Set()
-  } catch {
-    return new Set()
-  }
+  } catch { return new Set() }
 }
 
 function saveCompleted(ids: Set<string>) {
-  localStorage.setItem(LS_KEY, JSON.stringify([...ids]))
+  localStorage.setItem(LS_COMPLETED, JSON.stringify([...ids]))
+}
+
+export interface VoyageMeta {
+  file: string
+  nom: string
+  pays: string
+  emoji: string
 }
 
 interface VoyageContextValue {
@@ -26,57 +33,105 @@ interface VoyageContextValue {
   loading: boolean
   completedIds: Set<string>
   toggleCompleted: (id: string) => void
+  availableVoyages: VoyageMeta[]
+  activeFile: string
+  switchVoyage: (file: string) => void
+  mapRef: React.MutableRefObject<maplibregl.Map | null>
+  geolocateRef: React.MutableRefObject<maplibregl.GeolocateControl | null>
+  locateUser: () => void
 }
 
 const VoyageContext = createContext<VoyageContextValue | null>(null)
 
 export function VoyageProvider({ children }: { children: ReactNode }) {
-  const [voyage, setVoyage] = useState<Voyage | null>(null)
-  const [etapes, setEtapes] = useState<Etape[]>([])
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const [loading, setLoading] = useState(true)
-  const [completedIds, setCompletedIds] = useState<Set<string>>(loadCompleted)
+  const [voyage, setVoyage]           = useState<Voyage | null>(null)
+  const [etapes, setEtapes]           = useState<Etape[]>([])
+  const [selectedIndex, setSelected]  = useState(0)
+  const [loading, setLoading]         = useState(true)
+  const [completedIds, setCompleted]  = useState<Set<string>>(loadCompleted)
+  const [availableVoyages, setAvailable] = useState<VoyageMeta[]>([])
+  const [activeFile, setActiveFile]   = useState<string>('')
+  const mapRef = useRef<maplibregl.Map | null>(null)
+  const geolocateRef = useRef<maplibregl.GeolocateControl | null>(null)
+
+  function locateUser() {
+    geolocateRef.current?.trigger()
+  }
 
   function toggleCompleted(id: string) {
-    setCompletedIds(prev => {
+    setCompleted(prev => {
       const next = new Set(prev)
-      if (next.has(id)) next.delete(id)
-      else next.add(id)
+      next.has(id) ? next.delete(id) : next.add(id)
       saveCompleted(next)
       return next
     })
   }
 
-  useEffect(() => {
-    async function load() {
-      try {
-        const base = import.meta.env.BASE_URL
-        const configRes = await fetch(`${base}config.json`)
-        const config = await configRes.json() as { voyage_actif: string }
+  const loadVoyage = useCallback(async (file: string) => {
+    setLoading(true)
+    try {
+      const base = import.meta.env.BASE_URL
+      const res  = await fetch(`${base}voyages/${file}`)
+      const data = await res.json() as VoyageData
 
-        const voyageRes = await fetch(`${base}voyages/${config.voyage_actif}`)
-        const data = await voyageRes.json() as VoyageData
+      await clearDB()
+      await seedDB(data.etapes)
+      const stored = await getAllEtapes()
 
-        await seedDB(data.etapes)
-        const stored = await getAllEtapes()
+      setVoyage(data.voyage)
+      setEtapes(stored)
+      setActiveFile(file)
 
-        setVoyage(data.voyage)
-        setEtapes(stored)
-
-        const enCours = getEtapeEnCours(stored)
-        const idx = enCours ? stored.findIndex(e => e.id === enCours.id) : 0
-        setSelectedIndex(idx >= 0 ? idx : 0)
-      } catch (err) {
-        console.error('Erreur chargement voyage:', err)
-      } finally {
-        setLoading(false)
-      }
+      const enCours = getEtapeEnCours(stored)
+      const idx = enCours ? stored.findIndex(e => e.id === enCours.id) : 0
+      setSelected(idx >= 0 ? idx : 0)
+    } catch (err) {
+      console.error('Erreur chargement voyage:', err)
+    } finally {
+      setLoading(false)
     }
-    load()
   }, [])
 
+  function switchVoyage(file: string) {
+    localStorage.setItem(LS_VOYAGE, file)
+    loadVoyage(file)
+  }
+
+  useEffect(() => {
+    async function init() {
+      const base = import.meta.env.BASE_URL
+
+      // Charger l'index des voyages disponibles
+      try {
+        const idxRes = await fetch(`${base}voyages/index.json`)
+        const idx    = await idxRes.json() as VoyageMeta[]
+        setAvailable(idx)
+      } catch (err) {
+        console.error('Erreur chargement index voyages:', err)
+      }
+
+      // Déterminer le voyage actif (localStorage > config.json)
+      let file = localStorage.getItem(LS_VOYAGE) ?? ''
+      if (!file) {
+        try {
+          const cfgRes = await fetch(`${base}config.json`)
+          const cfg    = await cfgRes.json() as { voyage_actif: string }
+          file = cfg.voyage_actif
+        } catch { file = 'bapteme-islandais-2026.json' }
+      }
+
+      await loadVoyage(file)
+    }
+    init()
+  }, [loadVoyage])
+
   return (
-    <VoyageContext.Provider value={{ voyage, etapes, selectedIndex, selectStep: setSelectedIndex, loading, completedIds, toggleCompleted }}>
+    <VoyageContext.Provider value={{
+      voyage, etapes, selectedIndex, selectStep: setSelected,
+      loading, completedIds, toggleCompleted,
+      availableVoyages, activeFile, switchVoyage,
+      mapRef, geolocateRef, locateUser,
+    }}>
       {children}
     </VoyageContext.Provider>
   )

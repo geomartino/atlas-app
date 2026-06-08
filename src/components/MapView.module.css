@@ -5,3 +5,8 @@
   height: 100%;
   z-index: 0;
 }
+
+/* Cacher le bouton natif MapLibre — on utilise "Me localiser" dans le menu */
+.map :global(.maplibregl-ctrl-bottom-right) {
+  display: none;
+}

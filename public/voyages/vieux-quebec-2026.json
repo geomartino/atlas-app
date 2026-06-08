@@ -1,0 +1,165 @@
+{
+  "meta": {
+    "version": "1.0",
+    "created_at": "2026-06-07",
+    "updated_at": "2026-06-07"
+  },
+  "voyage": {
+    "id": "vieux-quebec-2026",
+    "nom": "Québec — Limoilou & Vieux-Québec",
+    "pays": "Canada",
+    "depart": "2026-06-05",
+    "retour": "2026-06-08",
+    "duree_jours": 4,
+    "description": "Exploration de Limoilou et du Vieux-Québec, en partant du café Kogi sur la 18e Rue.",
+    "logistique": {}
+  },
+  "etapes": [
+    {
+      "id": "qc-01",
+      "numero": 1,
+      "titre": "Café Kogi — Maizerets",
+      "type": "libre",
+      "date_arrivee": "2026-06-05",
+      "date_depart": "2026-06-06",
+      "nuits": 1,
+      "distance_km": null,
+      "coords": { "lat": 46.8345, "lng": -71.2285 },
+      "description": "Point de départ au café Kogi, 1104 18e Rue dans le quartier Maizerets.",
+      "infos_pratiques": {},
+      "hebergement": null,
+      "activites": [
+        {
+          "id": "qc-01-01",
+          "nom": "Le Kogi",
+          "type": "café",
+          "description": "Café de quartier incontournable, 1104 18e Rue.",
+          "coords": { "lat": 46.8345, "lng": -71.2285 },
+          "duree": "1h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        },
+        {
+          "id": "qc-01-02",
+          "nom": "Parc Victoria",
+          "type": "parc",
+          "description": "Grand parc de Saint-Roch avec fontaines et espaces verts.",
+          "coords": { "lat": 46.8173, "lng": -71.2344 },
+          "duree": "1h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        }
+      ],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    },
+    {
+      "id": "qc-02",
+      "numero": 2,
+      "titre": "Saint-Roch — Rue Saint-Joseph",
+      "type": "guidee",
+      "date_arrivee": "2026-06-06",
+      "date_depart": "2026-06-07",
+      "nuits": 1,
+      "distance_km": 3,
+      "coords": { "lat": 46.8129, "lng": -71.2288 },
+      "description": "Artère principale de Saint-Roch avec boutiques, cafés et restaurants branchés.",
+      "infos_pratiques": {},
+      "hebergement": null,
+      "activites": [
+        {
+          "id": "qc-02-01",
+          "nom": "Rue Saint-Joseph Est",
+          "type": "quartier",
+          "description": "Rue commerciale en plein renouveau, boutiques indépendantes et restos.",
+          "coords": { "lat": 46.8129, "lng": -71.2288 },
+          "duree": "1h30",
+          "lien_navigation": null,
+          "sauvegarde": false
+        }
+      ],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    },
+    {
+      "id": "qc-03",
+      "numero": 3,
+      "titre": "Vieux-Québec — Château & Terrasse",
+      "type": "guidee",
+      "date_arrivee": "2026-06-07",
+      "date_depart": "2026-06-08",
+      "nuits": 1,
+      "distance_km": 4,
+      "coords": { "lat": 46.8113, "lng": -71.2051 },
+      "description": "Le Château Frontenac, la Terrasse Dufferin et le quartier Petit-Champlain.",
+      "infos_pratiques": {},
+      "hebergement": null,
+      "activites": [
+        {
+          "id": "qc-03-01",
+          "nom": "Château Frontenac",
+          "type": "site historique",
+          "description": "Hôtel emblématique dominant le fleuve Saint-Laurent.",
+          "coords": { "lat": 46.8113, "lng": -71.2051 },
+          "duree": "45min",
+          "lien_navigation": null,
+          "sauvegarde": false
+        },
+        {
+          "id": "qc-03-02",
+          "nom": "Terrasse Dufferin",
+          "type": "site naturel",
+          "description": "Promenade en bois avec vue panoramique sur le Saint-Laurent.",
+          "coords": { "lat": 46.8110, "lng": -71.2043 },
+          "duree": "45min",
+          "lien_navigation": null,
+          "sauvegarde": false
+        },
+        {
+          "id": "qc-03-03",
+          "nom": "Rue du Petit-Champlain",
+          "type": "quartier",
+          "description": "Plus vieille rue commerçante d'Amérique du Nord.",
+          "coords": { "lat": 46.8115, "lng": -71.2035 },
+          "duree": "1h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        }
+      ],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    },
+    {
+      "id": "qc-04",
+      "numero": 4,
+      "titre": "Plaines d'Abraham",
+      "type": "depart",
+      "date_arrivee": "2026-06-08",
+      "date_depart": "2026-06-08",
+      "nuits": 0,
+      "distance_km": 3,
+      "coords": { "lat": 46.7977, "lng": -71.2288 },
+      "description": "Parc historique urbain avec vue sur le Saint-Laurent.",
+      "infos_pratiques": {},
+      "hebergement": null,
+      "activites": [
+        {
+          "id": "qc-04-01",
+          "nom": "Plaines d'Abraham",
+          "type": "parc",
+          "description": "Site de la bataille de 1759, parc urbain avec vue panoramique.",
+          "coords": { "lat": 46.7977, "lng": -71.2288 },
+          "duree": "2h",
+          "lien_navigation": null,
+          "sauvegarde": false
+        }
+      ],
+      "restaurants": [],
+      "favoris": [],
+      "notes": ""
+    }
+  ]
+}
