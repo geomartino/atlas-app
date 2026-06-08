@@ -24,8 +24,8 @@
 
 .title {
   font-family: 'Syne', sans-serif;
-  font-size: 17px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 700;
   color: var(--text);
   white-space: nowrap;
   overflow: hidden;
