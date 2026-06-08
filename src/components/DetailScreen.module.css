@@ -1,0 +1,257 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+}
+
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-top: 76px;
+}
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 13px 16px 11px;
+}
+
+.back {
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  background: var(--card);
+  border: 0.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--text2);
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.back:hover {
+  background: var(--card2);
+}
+
+.titleBlock {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.etapeLabel {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.city {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.sub {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 1px;
+}
+
+/* ── Chips ── */
+.chips {
+  display: flex;
+  gap: 7px;
+  padding: 0 16px 13px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--card);
+  border: 0.5px solid var(--border);
+  border-radius: 11px;
+  padding: 5px 10px;
+  font-size: 11px;
+  color: var(--text2);
+}
+
+.chip strong {
+  color: var(--text);
+}
+
+/* ── Divider / Labels ── */
+.divider {
+  height: 0.5px;
+  background: #1A2230;
+  margin: 0 16px 11px;
+}
+
+.secLabel {
+  padding: 0 16px 7px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text4);
+  font-weight: 500;
+}
+
+/* ── Sections accordéon ── */
+.section {
+  margin: 0 16px 7px;
+  border: 0.5px solid var(--border);
+  border-radius: 13px;
+  overflow: hidden;
+  background: var(--card);
+}
+
+.secHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 13px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  text-align: left;
+}
+
+.secIco {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.secName {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+}
+
+.secCount {
+  font-size: 10px;
+  color: var(--text4);
+  margin-right: 3px;
+}
+
+.secChev {
+  font-size: 14px;
+  color: var(--text4);
+  transition: transform 0.2s;
+}
+
+.secChevOpen {
+  transform: rotate(180deg);
+}
+
+/* ── Contenu section ── */
+.secBody {
+  border-top: 0.5px solid var(--border);
+}
+
+.secItem {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 13px;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.secItem:last-child {
+  border-bottom: none;
+}
+
+.itemTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.itemSub {
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.itemExtra {
+  font-size: 11px;
+  color: var(--text4);
+}
+
+/* ── Notes ── */
+.notesBlock {
+  padding: 0 16px 13px;
+}
+
+.notesArea {
+  width: 100%;
+  background: var(--card);
+  border: 0.5px solid var(--border);
+  border-radius: 11px;
+  padding: 9px 11px;
+  font-size: 12px;
+  color: var(--text2);
+  font-family: 'DM Sans', sans-serif;
+  resize: none;
+  min-height: 60px;
+  line-height: 1.5;
+}
+
+.notesArea:focus {
+  outline: none;
+  border-color: var(--border2);
+}
+
+.notesArea::placeholder {
+  color: var(--text5);
+}
+
+/* ── Bouton Découverte ── */
+.discBtn {
+  margin: 0 16px;
+  width: calc(100% - 32px);
+  padding: 11px;
+  border-radius: 13px;
+  background: var(--card2);
+  border: 0.5px solid var(--border2);
+  color: var(--text2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  opacity: 0.6;
+}

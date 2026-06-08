@@ -28,3 +28,7 @@ export async function getAllEtapes(): Promise<Etape[]> {
 export async function clearDB(): Promise<void> {
   await db.etapes.clear()
 }
+
+export async function updateEtapeNotes(id: string, notes: string): Promise<void> {
+  await db.etapes.update(id, { notes })
+}

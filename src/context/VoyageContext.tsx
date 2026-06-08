@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, useCallback, useRef, type ReactNode } from 'react'
 import type maplibregl from 'maplibre-gl'
 import type { Voyage, Etape, VoyageData } from '../types'
-import { seedDB, getAllEtapes, clearDB } from '../lib/db'
+import { seedDB, getAllEtapes, clearDB, updateEtapeNotes } from '../lib/db'
 import { getEtapeEnCours } from '../lib/statut'
 
 const LS_COMPLETED = 'atlas-completed-steps'
@@ -33,6 +33,7 @@ interface VoyageContextValue {
   loading: boolean
   completedIds: Set<string>
   toggleCompleted: (id: string) => void
+  updateNotes: (id: string, notes: string) => void
   availableVoyages: VoyageMeta[]
   activeFile: string
   switchVoyage: (file: string) => void
@@ -65,6 +66,11 @@ export function VoyageProvider({ children }: { children: ReactNode }) {
       saveCompleted(next)
       return next
     })
+  }
+
+  async function updateNotes(id: string, notes: string) {
+    await updateEtapeNotes(id, notes)
+    setEtapes(prev => prev.map(e => e.id === id ? { ...e, notes } : e))
   }
 
   const loadVoyage = useCallback(async (file: string) => {
@@ -128,7 +134,7 @@ export function VoyageProvider({ children }: { children: ReactNode }) {
   return (
     <VoyageContext.Provider value={{
       voyage, etapes, selectedIndex, selectStep: setSelected,
-      loading, completedIds, toggleCompleted,
+      loading, completedIds, toggleCompleted, updateNotes,
       availableVoyages, activeFile, switchVoyage,
       mapRef, geolocateRef, locateUser,
     }}>

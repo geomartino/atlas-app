@@ -4,6 +4,7 @@ import MapView from './components/MapView'
 import TripPill from './components/TripPill'
 import BottomSheet from './components/BottomSheet'
 import VoyageScreen from './components/VoyageScreen'
+import DetailScreen from './components/DetailScreen'
 import styles from './App.module.css'
 
 export type ActiveScreen = 'voyage' | 'detail' | null
@@ -18,6 +19,12 @@ export default function App() {
         <MapView />
         {activeScreen === 'voyage' && (
           <VoyageScreen
+            activeScreen={activeScreen}
+            onTabChange={setActiveScreen}
+          />
+        )}
+        {activeScreen === 'detail' && (
+          <DetailScreen
             activeScreen={activeScreen}
             onTabChange={setActiveScreen}
           />
