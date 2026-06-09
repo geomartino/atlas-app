@@ -73,14 +73,14 @@ export function VoyageProvider({ children }: { children: ReactNode }) {
     setEtapes(prev => prev.map(e => e.id === id ? { ...e, notes } : e))
   }
 
-  const loadVoyage = useCallback(async (file: string) => {
+  const loadVoyage = useCallback(async (file: string, clearFirst = false) => {
     setLoading(true)
     try {
       const base = import.meta.env.BASE_URL
       const res  = await fetch(`${base}voyages/${file}`)
       const data = await res.json() as VoyageData
 
-      await clearDB()
+      if (clearFirst) await clearDB()
       await seedDB(data.etapes)
       const stored = await getAllEtapes()
 
@@ -100,7 +100,7 @@ export function VoyageProvider({ children }: { children: ReactNode }) {
 
   function switchVoyage(file: string) {
     localStorage.setItem(LS_VOYAGE, file)
-    loadVoyage(file)
+    loadVoyage(file, true)
   }
 
   useEffect(() => {
